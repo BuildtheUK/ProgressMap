@@ -331,12 +331,7 @@
 
 
     function updateUserPolygonVisibility() {
-        // Get map bounds polygon
-        // in square meters
-
         var zoom = map.getZoom();
-
-        // Reference point: at zoom 10, polygons must be >= 1% of map
         var z0 = 10;
         var C = 500000;
 
