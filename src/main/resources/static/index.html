@@ -149,7 +149,9 @@
 
 
 </div>
-
+<div id="savebutton">
+    <button id="btnsave" onclick="savedata()">save</button>
+</div>
 <div id="closedsidebar">
     <button id="btntogglesidebar" class="openbtn" onclick="closeNav()">></button>
 </div>
@@ -227,7 +229,7 @@
         var zoom = map.getZoom();
 
         // Example: only load markers if zoom >= 12
-        if (zoom >= 12) {
+        if (zoom >= 18) {
             fetchMarkers(bounds);
         } else {
             markerLayer.clearLayers();
@@ -254,6 +256,15 @@
             map.removeLayer(usrpolygonLayer);
         }
     });
+
+    function savedata()
+    {
+        const response = fetch("api/save", {
+            method: 'POST',
+            body: JSON.stringify(usrpolydata)
+        });
+
+    }
 
     function addPolygon(layer)
     {
@@ -361,7 +372,7 @@
             .then(data => {
                 markerLayer.clearLayers();
                 data.forEach(m => {
-                    L.marker([m.lat, m.lng]).addTo(markerLayer);
+                    L.marker([m.location.lat, m.location.lng]).addTo(markerLayer);
                 });
             });
     }
@@ -376,7 +387,7 @@
                 data.forEach(p => {
                     if(!editedpolys.includes(p.id)) {
 
-
+                        console.log(p.bounds)
                         const coords = p.bounds.map(pt => [pt.lat, pt.lng]);
                         var poly = L.polygon(coords, {color: p.colour, id: p.id}).addTo(dbpolygonLayer);
 

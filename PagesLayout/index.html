@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Map</title>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="Page-Container">
+    <div class="Nav-Bar">
+        <div class="LogoBox">
+            <a href="index.html" >
+            <img class="logo" src="images/uk.png" alt="BTUK Logo" id="BTUKLogo">
+            </a>
+        </div>
+        <div class="NameBox">
+                <h1>Progress Map</h1>
+                <a href="btuk.org">
+                    <h3 id="serverIpNavBar">BTUK.org</h3>
+                </a>
+        </div>
+        <div class="ProfileBox">
+                <img  href="Profile.html" id="MCSkinLogo" class="logo" alt="MCSkin" src="images/channels4_profile.jpg"> 
+            <a href="login.html">            
+                <div class="loginButton">login</div>
+            </a>
+
+        </div>
+
+    </div>
+    <div class="content-container"> 
+        <div class="map" id="map"></div>
+        <div class="sidebar">
+            <div class="ItemInfoBox SidebarBox">
+                <p class="sidebarTitle">Item Info</p>
+                <input type="text" value="Name" id="RegionName"></input>
+                <div class="ListEditBox">
+                    <div class="ListDisplayBox">
+                        name1, name2, name3
+                    </div>
+                    <button class="Button">+</button>
+                </div>
+                <p>Area: </p>
+                <p>Number Of Buildings: </p>
+                <p>Percentage Complete: </p>
+                <p>Last Update: </p>
+                <button>Edit Claim</button>
+            </div>
+            <div class="LayerBox SidebarBox">
+                <p class="sidebarTitle">Layers</p>
+                <div class="LayerItem">
+                    <input type="checkbox" id="buildings" checked="true">
+                    <label for="buildings">Buildings</label>
+                </div>
+                <div class="LayerItem">
+                                        <input type="checkbox" id="areas" checked="true">
+                    <label for="areas">Areas</label>
+                </div>
+            </div>
+            <div class="StatsBox SidebarBox">
+                <p class="sidebarTitle">Statistics</p>
+                <div class="StatsInput">
+                <p>Player: </p>
+                <select name="Player">
+                    <option selected="selected">All</option>
+                </select>
+                </div>
+                <div class="StatsInput">
+                <p>Region: </p>
+                <select name="region">
+                    <option selected="selected">All</option>
+                </select>
+                </div>
+                <P>Buildings made: </P>
+                <p>Percentage complete: </p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+    
+
+	const map = L.map('map').setView([51.505, -0.09], 13);
+
+	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+
+
+</script>
+</body>
+
+</html>
