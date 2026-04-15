@@ -1,455 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-            crossorigin=""></script>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
-    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
-    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <meta charset="UTF-8">
-    <title>Title</title>
-
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-        }
-
-        /* Map fills the screen */
-        #map {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            z-index: 0;
-        }
-
-        .sidebar {
-            height: 100%; /* 100% Full-height */
-            width: 250px; /* 0 width - change this with JavaScript */
-            position: fixed; /* Stay in place */
-            z-index: 20; /* Stay on top */
-            bottom: 0;
-            right: 0;
-            border-left: 1px solid #b2b2b2;
-            background-color: #111; /* Black*/
-            overflow-x: hidden; /* Disable horizontal scroll */
-            padding-top: 60px; /* Place content 60px from the top */
-            transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
-        }
-
-        /* The sidebar links */
-        .sidebar a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .infoBox {
-            background-color: #212121;
-            padding-top: 8px
-        }
-
-        .infoBox h1 {
-            padding: 8px 8px 8px 8px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-
-        }
-        .infoBox h3{
-            padding: 8px 8px 8px 8px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-
-        /* When you mouse over the navigation links, change their color */
-        .sidebar a:hover {
-            color: #f1f1f1;
-        }
-
-        /* The button used to open the sidebar */
-        .openbtn {
-            display: block;
-            z-index: 2000;
-            right: 0;
-            font-size: 20px;
-            cursor: pointer;
-            background-color: #111;
-            color: white;
-        }
-
-        .openbtn:hover {
-            background-color: #444;
-        }
-
-        #closedsidebar {
-            position: absolute;
-            align-items: center;
-            right: 0px;
-            margin-right: 250px;
-            bottom: calc(50% - 1px);
-            background-color: #fff;
-            z-index: 1499;
-            border-radius: 10px 0 0 10px;
-            border: 1px solid #b2b2b2;
-            border-right-width: 0;
-            cursor: pointer;
-            transition: margin-right 0.5s;
-        }
-
-        #dataBox label {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-
-        @media screen and (max-height: 450px) {
-            .sidebar {padding-top: 15px;}
-            .sidebar a {font-size: 18px;}
-        }
-
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Map</title>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="homePage.js" defer></script>
 </head>
-
 <body>
-<div id="map"></div>
+    <div class="Page-Container">
+    <div class="Nav-Bar">
+        <div class="LogoBox">
+            <a href="index.html" >
+            <img class="logo" src="images/uk.png" alt="BTUK Logo" id="BTUKLogo">
+            </a>
+        </div>
+        <div class="NameBox">
+                <h1>Progress Map</h1>
+                <a href="https://btuk.org">
+                    <h3 id="serverIpNavBar">BTUK.org</h3>
+                </a>
+        </div>
+        <div class="ProfileBox">
+                <img  href="Profile.html" id="MCSkinLogo" class="logo" alt="MCSkin" src="images/channels4_profile.jpg"> 
+            <a href="login.html">            
+                <div class="loginButton">login</div>
+            </a>
 
-<div id="mySidebar" class="sidebar">
-    <div id ="itemInfo" class="infoBox">
-        <h1>Selected Item</h1>
-        <h3 id="clickstatusmsg">No item selected</h3>
-        <div id="dataBox"></div>
+        </div>
+
     </div>
-    <div id="layerSelector" class="infoBox">
-        <h1>Layers</h1>
-        <label><input type="checkbox" id="chkPolygons" checked> Polygons</label><br>
-        <label><input type="checkbox" id="chkMarkers" checked> Markers</label>
+    <div class="content-container"> 
+        <div class="map" id="map"></div>
+        <div class="sidebar">
+            <div class="ItemInfoBox SidebarBox">
+                <p class="sidebarTitle">Item Info</p>
+                <input type="text" value="Name" id="RegionName"></input>
+                <div class="ListEditBox">
+                    <div class="ListDisplayBox">
+                        name1, name2, name3
+                    </div>
+                    <button class="Button">+</button>
+                </div>
+                <p>Area: </p>
+                <p>Number Of Buildings: </p>
+                <p>Percentage Complete: </p>
+                <p>Last Update: </p>
+                <button>Edit Claim</button>
+            </div>
+            <div class="LayerBox SidebarBox">
+                <p class="sidebarTitle">Layers</p>
+                <div class="LayerItem">
+                    <input type="checkbox" id="buildings" checked="true">
+                    <label for="buildings">Buildings</label>
+                </div>
+                <div class="LayerItem">
+                                        <input type="checkbox" id="areas" checked="true">
+                    <label for="areas">Areas</label>
+                </div>
+            </div>
+            <div class="StatsBox SidebarBox">
+                <p class="sidebarTitle">Statistics</p>
+                <div class="StatsInput">
+                <p>Player: </p>
+                <select name="Player">
+                    <option selected="selected">All</option>
+                </select>
+                </div>
+                <div class="StatsInput">
+                <p>Region: </p>
+                <select name="region">
+                    <option selected="selected">All</option>
+                </select>
+                </div>
+                <P>Buildings made: </P>
+                <p>Percentage complete: </p>
+            </div>
+        </div>
     </div>
-    <div id="groupView" class="infoBox">
-        <h1>Item Groups</h1>
     </div>
+    <script>
+    
+
+	const map = L.map('map').setView([51.505, -0.09], 13);
+
+	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
 
 
-</div>
-<div id="savebutton">
-    <button id="btnsave" onclick="savedata()">save</button>
-</div>
-<div id="closedsidebar">
-    <button id="btntogglesidebar" class="openbtn" onclick="closeNav()">></button>
-</div>
-
+</script>
 </body>
 
-
-
 </html>
-
-
-<script>
-    var map = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-
-    const markerdata = new Map();
-    const dbpolydata = new Map();
-    const usrpolydata = new Map();
-    const editedpolys = [];
-
-
-    var currentData = 0;
-    var dbpolygonLayer = L.featureGroup().addTo(map);
-    var usrpolygonLayer = L.featureGroup().addTo(map);
-    var markerLayer = L.featureGroup().addTo(map);
-    var highlightedLayer = null;
-
-    var drawControl = new L.Control.Draw({
-        edit: {
-            featureGroup: usrpolygonLayer
-        },
-        draw: {
-            polygon: true,
-            circle: false,
-            marker: false,
-            polyline: false,
-            rectangle: false,
-            circlemarker: false,
-        }
-    });
-    map.addControl(drawControl);
-        var open = true;
-
-
-
-    map.on(L.Draw.Event.CREATED, function (e) {
-        var layer = e.layer;
-
-
-
-        var latlngs = layer.getLatLngs()[0]; // first ring
-        var bounds = latlngs.map(pt => ({ lat: pt.lat, lng: pt.lng }));
-
-        var data = {
-            "colour": "#3388ff",
-            "bounds": bounds,
-            "id": 0,
-            "builders": [],
-            "name": "",
-            "description": ""
-        }
-        usrpolydata.set(layer,data);
-        usrpolygonLayer.addLayer(layer);
-        addPolygon(layer);
-
-
-    });
-
-
-    map.on("moveend zoomend", function () {
-        var bounds = map.getBounds();
-        var zoom = map.getZoom();
-
-        // Example: only load markers if zoom >= 12
-        if (zoom >= 18) {
-            fetchMarkers(bounds);
-        } else {
-            markerLayer.clearLayers();
-        }
-
-        updateUserPolygonVisibility();
-        // Example: only load polygons above certain size depending on zoom
-        fetchPolygons(bounds, zoom);
-    });
-
-    document.getElementById("chkMarkers").addEventListener("change", function(e) {
-        if (e.target.checked) {
-            map.addLayer(markerLayer);
-        } else {
-            map.removeLayer(markerLayer);
-        }
-    });
-    document.getElementById("chkPolygons").addEventListener("change", function(e) {
-        if (e.target.checked) {
-            map.addLayer(dbpolygonLayer);
-            map.addLayer(usrpolygonLayer);
-        } else {
-            map.removeLayer(dbpolygonLayer);
-            map.removeLayer(usrpolygonLayer);
-        }
-    });
-
-    function savedata()
-    {
-        const response = fetch("api/save", {
-            method: 'POST',
-            body: JSON.stringify(usrpolydata)
-        });
-
-    }
-
-    function addPolygon(layer)
-    {
-        layer.setStyle({
-            color: getData(layer).colour,
-            weight: 3,
-            fillOpacity: 0.4
-        });
-
-
-        layer.on("click", function () {
-            const polyData = getData(layer);
-            console.log(highlightedLayer)
-            if (highlightedLayer) {
-                highlightedLayer.setStyle({
-                    color: getData(highlightedLayer).colour,
-                    weight: 3,
-                    fillOpacity: 0.4
-                });
-            }
-            if(highlightedLayer !== layer) {
-                layer.setStyle({
-                    color: darkenColor(polyData.colour),
-                    weight: 5,
-                    fillOpacity: 0.6
-                });
-                highlightedLayer = layer;
-                currentData = polyData;
-                document.getElementById("clickstatusmsg").innerText = "";
-                showPolyData(layer);
-            }
-            else
-            {
-                highlightedLayer = null;
-                currentData = null;
-                document.getElementById("dataBox").innerHTML = "";
-                document.getElementById("clickstatusmsg").innerText = "No item selected"
-            }
-        });
-    }
-
-    function showPolyData(layer)
-    {
-        const data = getData(layer);
-        document.getElementById("dataBox").innerHTML = `<label>Name: <input id="inputName" type="text" value="${data.name}" oninput="editProperty( 'name', this.value)" /></label>
-<label>Description: <input id="inputDesc" type="text" value="${data.description}" oninput="editProperty('description', this.value)" /></label>
-<label>Builders: <input id="inputBuilders" type="text" value="${data.builders.join(", ")}" oninput="editProperty('builders', this.value)" /></label>
-<label>Colour: <input id="inputColour" type="color" value="${data.colour}" oninput="editProperty( 'colour', this.value)" /></label>` ;
-    }
-
-    function editProperty(property,value)
-    {
-        const layer = highlightedLayer;
-        const data = getData(layer);
-        if(data.id !== 0 && !editedpolys.includes(data.id))
-        {
-            usrpolydata.set(layer,data);
-            dbpolydata.delete(layer);
-            dbpolygonLayer.removeLayer(layer);
-            layer.addTo(usrpolygonLayer);
-            editedpolys.push(data.id);
-        }
-        if (property === "builders") {
-            data.builders = value.split(",").map(b => b.trim()).filter(b => b);
-        } else {
-            data[property] = value;
-        }
-
-        if(property === "colour")
-        {
-            layer.setStyle({color: darkenColor(data.colour), weight: 5, fillOpacity: 0.6});
-        }
-
-    }
-
-
-    function updateUserPolygonVisibility() {
-        var zoom = map.getZoom();
-        var z0 = 10;
-        var C = 500000;
-
-        // Compute threshold with log2 scaling
-        var threshold = C / Math.pow(2, (zoom - z0));
-        usrpolygonLayer.eachLayer(layer => {
-                // Convert polygon to GeoJSON for turf
-                var poly = layer.toGeoJSON();
-                var polyArea = turf.area(poly);
-                if (polyArea < threshold) {
-                    // Hide (remove from map but keep in group)
-                    if (map.hasLayer(layer)) {
-                        map.removeLayer(layer);
-                    }
-                } else {
-                    // Show if not already visible
-                    if (!map.hasLayer(layer)) {
-                        layer.addTo(map);
-                    }
-                }
-        });
-    }
-
-    function fetchMarkers(bounds) {
-        fetch("/api/markers?bounds=" + bounds.toBBoxString())
-            .then(r => r.json())
-            .then(data => {
-                markerLayer.clearLayers();
-                data.forEach(m => {
-                    L.marker([m.location.lat, m.location.lng]).addTo(markerLayer);
-                });
-            });
-    }
-
-    function fetchPolygons(bounds, zoom) {
-        fetch(`/api/getPolygon?bounds=${bounds.toBBoxString()}&zoom=${zoom}`)
-            .then(response => response.json())
-            .then(data => {
-                dbpolygonLayer.clearLayers();
-                dbpolydata.clear();
-
-                data.forEach(p => {
-                    if(!editedpolys.includes(p.id)) {
-
-                        console.log(p.bounds)
-                        const coords = p.bounds.map(pt => [pt.lat, pt.lng]);
-                        var poly = L.polygon(coords, {color: p.colour, id: p.id}).addTo(dbpolygonLayer);
-
-                        dbpolydata.set(poly, p);
-
-                        addPolygon(poly);
-                    }
-                });
-            });
-    }
-
-
-    function openNav() {
-        document.getElementById("mySidebar").style.width = "250px";
-        document.getElementById("closedsidebar").style.marginRight = "250px";
-        document.getElementById("btntogglesidebar").innerText = ">"
-    }
-
-    function closeNav() {
-        if(open === false){
-            openNav();
-            open = true;
-            return;
-        }
-        open = false;
-        document.getElementById("btntogglesidebar").innerText = "<"
-        document.getElementById("mySidebar").style.width = "0";
-        document.getElementById("closedsidebar").style.marginRight = "0";
-    }
-
-    function darkenColor(hex, factor = 0.8) {
-        // Remove leading #
-        hex = hex.replace(/^#/, "");
-
-        // Convert to r,g,b
-        let r = parseInt(hex.substring(0, 2), 16);
-        let g = parseInt(hex.substring(2, 4), 16);
-        let b = parseInt(hex.substring(4, 6), 16);
-
-        // Apply darkening factor
-        r = Math.floor(r * factor);
-        g = Math.floor(g * factor);
-        b = Math.floor(b * factor);
-
-        // Clamp to [0,255] and convert back to hex
-        return (
-            "#" +
-            r.toString(16).padStart(2, "0") +
-            g.toString(16).padStart(2, "0") +
-            b.toString(16).padStart(2, "0")
-        );
-    }
-
-    function getData(poly){
-        if(dbpolydata.get(poly) !== undefined)
-        {
-            return dbpolydata.get(poly);
-        }
-        else
-        {
-            return  usrpolydata.get(poly)
-        }
-
-    }
-</script>

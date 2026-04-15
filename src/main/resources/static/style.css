@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+    --accent-colour: #00247e;
+    --base-colour: #f2f2f0;
+    --text-dark-colour: black;
+    --input-colour: #dbdbdb;
+    --text-light-colour: white;
+    --accent-colour-2: white;
+    --incorrect-colour: red;
+
+}
+html{
+    font-family: raleway, sans-serif;
+    text-align: center;
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.Page-Container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    
+}
+body{
+    margin: 0;
+}
+#BTUKLogo{
+    height: 80%;
+    width: 80%;
+}
+.logo{
+
+}
+.NameBox{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+#serverIpNavBar{
+    align-self: flex-start;
+    color: var(--text-light-colour);
+    text-decoration: none;
+
+}
+.Nav-Bar h1{
+    color: var(--text-light-colour);
+}
+
+.ProfileBox{
+    display: flex;
+    max-width: 75px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: auto;
+    height: 100%;
+    margin-right: 10px;
+
+}
+#MCSkinLogo{
+    border-radius: 100%;
+    width: 70%;
+}
+.loginButton{
+    text-decoration: none;
+    text-decoration-color: black;
+    font-weight: normal;
+    color: var(--text-dark-colour);
+    font-style: normal;
+}
+.Nav-Bar{
+    flex-grow: 0;
+    background-color: var(--accent-colour);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 75px;
+}
+.LogoBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-left: 10px;
+}
+.content-container{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.map{
+    flex-grow: 1;
+    flex-shrink: 1;
+
+}
+#map{
+    height: 100%;
+}
+.sidebar{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--base-colour);
+    flex-grow: 0;
+    flex-shrink: 1;
+    width: 250px;
+
+    height: 100%;
+}
+.SidebarBox{
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.ItemInfoBox{
+
+     border-bottom: 2px black solid;
+
+}
+.ListEditBox{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+
+}
+.ListDisplayBox{
+    background-color: var(--input-colour);
+    border: gray solid 1px;
+    text-wrap:  wrap;
+    flex-shrink: 1;
+    width: 100%;
+}
+.StatsBox{
+
+}
+.LayerBox{
+        border-bottom: 2px black solid;
+}
+.sidebarTitle{
+    margin: 0;
+    font-weight: bold;
+    font-size: medium;
+}
+.StatsInput{
+    display: flex;
+    justify-content: flex-start;
+    width: 90%;
+    gap:5px;
+
+}
+select{
+    width:90%;
+}
+.AccountForm{
+    background-color: var(--base-colour);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    flex-direction: column;
+    width: 350px;
+    padding: 10px;
+    gap:10px;
+}
+
+.AccountForm h2{
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.FormInput{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.AccountForm form label{
+    height: 50px;
+    width: 50px;
+    background-color: var(--accent-colour);
+    border-radius: 10px 0 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.AccountForm form label svg{
+    fill: var(--accent-colour-2);
+}
+.AccountForm form input{
+    box-sizing: border-box;
+    flex-grow: 1;
+    height: 50px;
+    padding: 1em;
+    border-radius:  0 10px 10px 0;
+    border: 2px solid var(--input-colour);
+    border-left: none;
+    background-color: var(--input-colour);
+    transition: 150ms ease;
+
+}
+form input:hover{
+    border-color: var(--accent-colour);
+}
+
+form input:focus{
+    outline: none;
+    border-color: var(--text-dark-colour);
+}
+
+div:has(input:focus) > label{
+    background-color: var(--text-dark-colour);
+}
+
+form button{
+    margin-top: 10px;
+    border: none;
+    border-radius: 1000px;
+    padding: 0.85em 4em;
+    background-color: var(--accent-colour);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: var(--text-light-colour);
+}
+form button:hover{
+    background-color: var(--text-dark-colour);
+}
+form button:focus{
+    outline: none;
+}
+
+form button:focus-visible{
+    outline: none;
+    background-color: var(--text-dark-colour);
+}
+
+a{
+    text-decoration: none;
+}
+.BackgroundPage{
+    background-image: url(images/big-ben.png);
+    background-size: cover;
+    background-position: center ;
+    overflow: hidden;
+}
+
+.incorrect label {
+    background-color: var(--incorrect-colour) !important;
+}
+.incorrect input{
+    border-color: var(--incorrect-colour) !important;
+}
+#errorMessage{
+    color: var(--incorrect-colour);
+}
+
+@media only screen and (max-width: 450px){
+    .content-container{
+        flex-direction: column;
+    }
+    .sidebar{
+        flex-direction: row;
+        height: 250px;
+        width: 100%;
+    }
+    .map{width: 100%;}
+    .ItemInfoBox{
+        border-bottom: none;
+        border-right: 2px black solid;
+    }
+    .LayerBox{
+        border-right: 2px black solid;
+        border-bottom: none;
+    }
+    .AccountForm{
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        box-sizing: border-box;
+
+    }
+    .Nav-Bar{
+        text-align: left;
+        height: 100px;
+    }
+}
