@@ -18,16 +18,20 @@ public class UserService {
     public User register(VerificationResult r) {
 
         User user = new User();
-        user.setUsername(r.username);
+        user.setUsername(r.username); //get uuid from proxy from username. if username doesn't exist fail
         user.setPassword(r.passwordHash);
 
         return repo.save(user);
     }
 
     public User login(String username, String password) {
-        return repo.findByUsername(username)
+        return repo.findByUsername(username) //fetch uuid from proxy by username
                 .filter(user -> PasswordUtil.verify(password, user.getPassword()))
                 .orElse(null);
+    }
+
+    public User findByUsername(String username){
+        return  repo.findByUsername(username).orElse(null);
     }
 
     public boolean userExists(String username){

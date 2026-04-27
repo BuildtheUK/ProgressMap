@@ -38,7 +38,7 @@ form.addEventListener('submit', (e) => {
         }
     }
     else if( otcInput !== null){
-        fetch("auth/verify", {
+        fetch("/auth/verify", {
             method: "POST",
             credentials: "include",
             headers: {
@@ -48,38 +48,45 @@ form.addEventListener('submit', (e) => {
                 username: sessionStorage.getItem("pendingUsername"),
                 otc: otcInput.value
             })
-        }).then (res => {
-            if (!res.ok){
-                throw new Error("Unable to verify")
-            }
-            window.location.replace("index.html")
+        }).then (async (res) => {
+            if (!res.ok) throw new Error("Verify failed");
 
+            const data = await res.json();
+
+            if (data.success) {
+                window.location.replace("/index.html");
+            }
         }).catch(err => {console.error(err); errorMessage.innerText = "Network Error"})
     }
-    else{
+    else
+    {
         errors = getLoginFormErrors(usernameInput.value,passwordInput.value)
+        console.log("Logging in")
         if (errors.length > 0){
 
             errorMessage.innerText = errors.join(". ")
             console.log(errors)
         }
         else{
-            fetch("auth/login", {method: "POST",
-                credentials: "include",
-                headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: usernameInput.value,
-                password: passwordInput.value
-            })}).then(
+            const formData = new URLSearchParams();
+            formData.append("username", usernameInput.value);
+            formData.append("password", passwordInput.value);
+
+            fetch("/auth/login", {
+                method: "POST",
+                body: formData,
+                credentials: "include"
+            }).then(
                 res => {
                     if (!res.ok){
                         throw new Error("Network Error")
                     }
-                    window.location.replace("index.html")
+                    return res.text()
+
                 }
-            ).catch(err => {console.log(err); errorMessage.innerText = "Network Error"})
+            ).then(() => {
+                window.location.replace("index.html")
+            }).catch(err => {console.log(err); errorMessage.innerText = "Network Error"})
 
         }
     }

@@ -11,7 +11,7 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    private String username;
+    private String username; //will store an mc uuid in the future
 
     private String password;
 

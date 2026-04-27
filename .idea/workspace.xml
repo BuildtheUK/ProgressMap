@@ -4,62 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HELP.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/DemoApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/PasswordUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/LoginObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/OneTimeCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/VerificationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/VerificationResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/repositories/OneTimeCodeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/repositories/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/OTCService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/PasswordValidationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/UserService.java" afterDir="false" />
+    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="Login system working with local database. probably still has a lot of work to do">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/CustomUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/homePage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/big-ben.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/blankProfile.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/lock.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/person.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/old.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/signUp.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/verification.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/maphub/DemoApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PagesLayout/Profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/Profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PagesLayout/images/channels4_profile.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/channels4_profile.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PagesLayout/images/uk.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/uk.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PagesLayout/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PagesLayout/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PagesLayout/signUp.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PagesLayout/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/MapHub/Building.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/MapHub/Group.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/MapHub/LatLng.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/MapHub/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/MapHub/MapDataController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/MapHub/ProgressArea.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/MapHub/SQL.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example-application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/DemoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/homePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/homePage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,6 +29,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="package-info" />
         <option value="Class" />
       </list>
     </option>
@@ -78,6 +37,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AMgr8&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BTEUK/ProgressMap.git&quot;,
+    &quot;accountId&quot;: &quot;0e9473e5-3f28-4e0b-a969-573ae1b0402d&quot;
+  }
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -89,43 +60,44 @@
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="3CMkTq16Ma7Sl9MMwqNcJ5f7UXi" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.MapHub [clean].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.DemoApplication.executor": "Run",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "develop",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.MapHub [clean].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DemoApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.example.maphub.entities" />
@@ -166,11 +138,27 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1776202837374</updated>
-      <workItem from="1776202839021" duration="20292000" />
+      <workItem from="1776202839021" duration="22180000" />
+      <workItem from="1776415799018" duration="7214000" />
+      <workItem from="1776678555964" duration="4000" />
+      <workItem from="1777320293839" duration="13257000" />
     </task>
+    <task id="LOCAL-00001" summary="Login system working with local database. probably still has a lot of work to do">
+      <option name="closed" value="true" />
+      <created>1776295590706</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776295590706</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Login system working with local database. probably still has a lot of work to do" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login system working with local database. probably still has a lot of work to do" />
   </component>
 </project>

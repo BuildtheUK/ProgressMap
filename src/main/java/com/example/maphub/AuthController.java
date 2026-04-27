@@ -5,10 +5,13 @@ import com.example.maphub.services.PasswordValidationService;
 import com.example.maphub.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -44,29 +47,40 @@ public class AuthController {
     public ResponseEntity<?> verify(@RequestBody VerificationResponse result, HttpSession session){
         VerificationResult r = otcService.fetchUserDetails(result.username,result.otc);
         User user = userService.register(r);
-        session.setAttribute("user", user.getUsername());
-        return ResponseEntity.ok("Logged in");
+
+        UsernamePasswordAuthenticationToken auth =
+                new UsernamePasswordAuthenticationToken(
+                        user.getUsername(),
+                        null,
+                        java.util.Collections.emptyList()
+                );
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        session.setAttribute("SPRING_SECURITY_CONTEXT",
+                SecurityContextHolder.getContext());
+
+        return ResponseEntity.ok(Map.of("success", true));
     }
 
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginObject request, HttpSession session) {
-        User user = userService.login(request.username, request.password);
-
-        if (user == null) {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
-
-        session.setAttribute("user", user.getUsername());
-        System.out.println("SESSION ID (login): " + session.getId());
-        return ResponseEntity.ok("Logged in");
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpSession session) {
-        session.invalidate();
-        return ResponseEntity.ok("Logged out");
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginObject request, HttpSession session) {
+//        User user = userService.login(request.username, request.password);
+//
+//        if (user == null) {
+//            return ResponseEntity.status(401).body("Invalid credentials");
+//        }
+//
+//        session.setAttribute("user", user.getUsername());
+//        System.out.println("SESSION ID (login): " + session.getId());
+//        return ResponseEntity.ok("Logged in");
+//    }
+//
+//    @PostMapping("/logout")
+//    public ResponseEntity<?> logout(HttpSession session) {
+//        session.invalidate();
+//        return ResponseEntity.ok("Logged out");
+//    }
 
 
 }
