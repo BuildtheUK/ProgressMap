@@ -4,21 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="Login system working with local database. probably still has a lot of work to do">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/CustomUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" afterDir="false" />
+    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="Login system actually working with local database.">
       <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/visibility_24dp_E3E3E3_FILL1_wght400_GRAD0_opsz24.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/visibility_off_24dp_E3E3E3_FILL1_wght400_GRAD0_opsz24.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/DemoApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/homePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/homePage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/signUp.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/signUp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +137,12 @@
       <workItem from="1776202839021" duration="22180000" />
       <workItem from="1776415799018" duration="7214000" />
       <workItem from="1776678555964" duration="4000" />
-      <workItem from="1777320293839" duration="13257000" />
+      <workItem from="1777320293839" duration="13367000" />
+      <workItem from="1777367061788" duration="23000" />
+      <workItem from="1777367917527" duration="15153000" />
+      <workItem from="1779224537292" duration="7474000" />
+      <workItem from="1780954133756" duration="6000" />
+      <workItem from="1780955595538" duration="6149000" />
     </task>
     <task id="LOCAL-00001" summary="Login system working with local database. probably still has a lot of work to do">
       <option name="closed" value="true" />
@@ -151,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776295590706</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Login system actually working with local database.">
+      <option name="closed" value="true" />
+      <created>1777334033219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1777334033219</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +168,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Login system working with local database. probably still has a lot of work to do" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login system working with local database. probably still has a lot of work to do" />
+    <MESSAGE value="Login system actually working with local database." />
+    <option name="LAST_COMMIT_MESSAGE" value="Login system actually working with local database." />
   </component>
 </project>

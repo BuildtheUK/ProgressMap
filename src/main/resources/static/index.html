@@ -28,7 +28,7 @@
                 </a>
         </div>
         <div class="ProfileBox">
-                <img id="MCSkinLogo" class="logo" alt="MCSkin" src="images/channels4_profile.jpg">
+                <img id="MCSkinLogo" class="logo" alt="MCSkin"  src="images/blankProfile.svg">
                 <button id="btnLogin" class="loginButton">login</button>
 
         </div>
@@ -37,9 +37,9 @@
     <div class="content-container"> 
         <div class="map" id="map"></div>
         <div class="sidebar">
-            <div class="ItemInfoBox SidebarBox">
-                <p class="sidebarTitle">Item Info</p>
-                <input type="text" value="Name" id="RegionName"></input>
+            <div class="ItemInfoBox SidebarBox" id="RegionInfoBox">
+                <p class="sidebarTitle">Region Info</p>
+                <label for="RegionName"></label><input type="text" value="Name" id="RegionName"></input>
                 <div class="ListEditBox">
                     <div class="ListDisplayBox">
                         name1, name2, name3
@@ -51,6 +51,15 @@
                 <p>Percentage Complete: </p>
                 <p>Last Update: </p>
                 <button>Edit Claim</button>
+            </div>
+            <div class="ItemInfoBox SidebarBox" id="BuildingInfoBox">
+                <p class="sidebarTitle">Building Info</p>
+                <label for="BuildingName"></label><input type="text" value="Name" id="BuildingName"></input>
+                <p id="BuildingBuilder">Builder: </p> <button class="Button" id="ClaimUnclaimed">Claim</button>
+                <p id="BuildingCreationDate">Created on: </p>
+            </div>
+            <div class="ItemInfoBox SidebarBox" id="NoItemSelected">
+                <p>Welcome to BTUK Progress Map. <br> Have a look around or Create an account to link to your Minecraft account</p>
             </div>
             <div class="LayerBox SidebarBox">
                 <p class="sidebarTitle">Layers</p>
@@ -84,14 +93,7 @@
     </div>
     </div>
     <script>
-    
 
-	const map = L.map('map').setView([51.505, -0.09], 13);
-
-	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	}).addTo(map);
 
 
 </script>
