@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface OneTimeCodeRepository extends JpaRepository<OneTimeCode, Long> {
-    Optional<OneTimeCode> findByUsernameAndCode(String username, int code);
+    Optional<OneTimeCode> findByUuidAndCode(String uuid, int code);
 
-    void deleteByUsername(String username);
+    void deleteByUuid(String uuid);
 }

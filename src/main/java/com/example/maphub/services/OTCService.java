@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.Random;
 
 @Service
+@Transactional
 public class OTCService {
     private final OneTimeCodeRepository repo;
 
@@ -23,33 +24,29 @@ public class OTCService {
         this.repo = repo;
     }
 
-    public VerificationResult fetchUserDetails(String username, int code){
-        OneTimeCode otc = repo.findByUsernameAndCode(username,code).orElseThrow(() -> new RuntimeException("Invalid code"));
-        if(LocalDateTime.now().isBefore( otc.getExpiry())) {
-            repo.delete(otc);
-            return new VerificationResult(
-                    otc.getUsername(),
-                    otc.getpHash()
-            );
-        }
-        else{
-            throw new RuntimeException("Invalid code used");
-        }
-
-
+    public boolean isValidCode(String uuid, int code){
+            return repo.findByUuidAndCode(uuid, code)
+                    .map(otc -> {
+                        if (LocalDateTime.now().isBefore(otc.getExpiry())) {
+                            repo.delete(otc);
+                            return true;
+                        }
+                        return false;
+                    })
+                    .orElse(false);
     }
 
 
+    //Creates a one timeCode, Stores it in the DB and sends to the players MC account.
     @Transactional
-    public void createOneTimeCode(String username, String password)
+    public void createOneTimeCode(String uuid, String purpose)
     {
-        repo.deleteByUsername(username);
-        String hashed = PasswordUtil.hash(password);
+        repo.deleteByUuid(uuid);
         OneTimeCode c = new OneTimeCode();
-        c.setUsername(username);
-        c.setpHash(hashed);
+        c.setUuid(uuid);
+        c.setPurpose(purpose);
         c.setExpiry(LocalDateTime.now().plusMinutes(15));
-        c.setCode(new SecureRandom().nextInt(999999));
+        c.setCode(new SecureRandom().nextInt(100000,999999));
         System.out.println(c.getCode());
         repo.save(c);
     }

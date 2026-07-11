@@ -97,25 +97,31 @@ form.addEventListener('submit', (e) => {
             console.log(errors)
         }
         else{
-            const formData = new URLSearchParams();
-            formData.append("username", usernameInput.value);
-            formData.append("password", passwordInput.value);
 
             fetch("/auth/login", {
                 method: "POST",
-                body: formData,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: usernameInput.value,
+                    password: passwordInput.value
+                }),
                 credentials: "include"
-            }).then(
-                res => {
-                    if (!res.ok){
-                        throw new Error("Network Error")
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error("Invalid credentials");
                     }
-                    return res.text()
-
-                }
-            ).then(() => {
-                window.location.replace("index.html")
-            }).catch(err => {console.log(err); errorMessage.innerText = "Network Error"})
+                    return res.text();
+                })
+                .then(() => {
+                    window.location.replace("index.html");
+                })
+                .catch(err => {
+                    console.error(err);
+                    errorMessage.innerText = "Invalid username or password";
+                });
 
         }
     }

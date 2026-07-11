@@ -4,17 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="Login system actually working with local database.">
+    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="Show password, ability to click on and off markers to show and hide information">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/LoginUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/ProxyAPIService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/visibility_24dp_E3E3E3_FILL1_wght400_GRAD0_opsz24.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/visibility_off_24dp_E3E3E3_FILL1_wght400_GRAD0_opsz24.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/CustomUserDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/OneTimeCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/OneTimeCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/repositories/OneTimeCodeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/repositories/OneTimeCodeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/OTCService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/OTCService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/homePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/homePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/signUp.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/signUp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +30,7 @@
       <list>
         <option value="Interface" />
         <option value="package-info" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -67,6 +72,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;Maven.MapHub [clean].executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
@@ -89,7 +95,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;application.passwordSafe&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -142,7 +148,11 @@
       <workItem from="1777367917527" duration="15153000" />
       <workItem from="1779224537292" duration="7474000" />
       <workItem from="1780954133756" duration="6000" />
-      <workItem from="1780955595538" duration="6149000" />
+      <workItem from="1780955595538" duration="6618000" />
+      <workItem from="1781023268544" duration="7318000" />
+      <workItem from="1781194343707" duration="1931000" />
+      <workItem from="1782063777125" duration="3577000" />
+      <workItem from="1783701182539" duration="16000000" />
     </task>
     <task id="LOCAL-00001" summary="Login system working with local database. probably still has a lot of work to do">
       <option name="closed" value="true" />
@@ -160,7 +170,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777334033219</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Show password, ability to click on and off markers to show and hide information">
+      <option name="closed" value="true" />
+      <created>1780966576401</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1780966576401</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +187,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Login system working with local database. probably still has a lot of work to do" />
     <MESSAGE value="Login system actually working with local database." />
-    <option name="LAST_COMMIT_MESSAGE" value="Login system actually working with local database." />
+    <MESSAGE value="Show password, ability to click on and off markers to show and hide information" />
+    <option name="LAST_COMMIT_MESSAGE" value="Show password, ability to click on and off markers to show and hide information" />
   </component>
 </project>

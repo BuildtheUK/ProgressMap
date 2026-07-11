@@ -5,8 +5,10 @@ import com.example.maphub.entities.User;
 import com.example.maphub.entities.VerificationResult;
 import com.example.maphub.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository repo;
@@ -15,26 +17,40 @@ public class UserService {
         this.repo = repo;
     }
 
-    public User register(VerificationResult r) {
+    public void register(String uuid, String hashedPassword) {
 
         User user = new User();
-        user.setUsername(r.username); //get uuid from proxy from username. if username doesn't exist fail
-        user.setPassword(r.passwordHash);
+        user.setUuid(uuid);
+        user.setPassword(hashedPassword);
+        user.setVerified(false);
 
-        return repo.save(user);
+        repo.save(user);
     }
 
-    public User login(String username, String password) {
-        return repo.findByUsername(username) //fetch uuid from proxy by username
+    public User login(String uuid, String password) {
+        return repo.findByUuid(uuid)
                 .filter(user -> PasswordUtil.verify(password, user.getPassword()))
                 .orElse(null);
     }
 
-    public User findByUsername(String username){
-        return  repo.findByUsername(username).orElse(null);
+    public User findByUuid(String uuid){
+        return  repo.findByUuid(uuid).orElse(null);
     }
 
-    public boolean userExists(String username){
-        return repo.findByUsername(username).isPresent();
+    public boolean userExists(String uuid){
+        return repo.findByUuid(uuid).isPresent();
+    }
+
+    public boolean userAccountIsActivated(String uuid) {return repo.findByUuid(uuid).filter(User::isVerified).isPresent();}
+
+    public void verifyUser(String uuid) {
+            repo.findByUuid(uuid).ifPresent(user -> {
+                user.setVerified(true);
+                repo.save(user);
+            });
+    }
+
+    public void deleteByUuid(String uuid){
+        repo.deleteByUuid(uuid);
     }
 }

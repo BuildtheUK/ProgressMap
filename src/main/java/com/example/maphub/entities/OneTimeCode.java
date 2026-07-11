@@ -10,20 +10,11 @@ public class OneTimeCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    private String username;
-    private String pHash;
     private int code;
     private LocalDateTime expiry;
+    private String uuid;
+    private String purpose;
 
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getpHash() {
-        return pHash;
-    }
 
     public int getCode() {
         return code;
@@ -32,21 +23,25 @@ public class OneTimeCode {
     public LocalDateTime getExpiry() {
         return expiry;
     }
+    public String getUuid(){
+        return uuid;
+    }
+    public String getPurpose(){
+        return purpose;
+    }
 
     public void setCode(int code){
         this.code = code;
-    }
-    public void setUsername(String username)
-    {
-        this.username = username;
     }
     public void setExpiry(LocalDateTime t)
     {
         this.expiry = t;
     }
-    public void setpHash (String hash)
-    {
-        this.pHash = hash;
+    public void setUuid(String uuid){
+        this.uuid = uuid;
+    }
+    public void setPurpose(String purpose){
+        this.purpose = purpose;
     }
 
 

@@ -11,12 +11,23 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    private String username; //will store an mc uuid in the future
+    private String uuid;
 
     private String password;
 
-    public void setUsername(String username) {
-       this.username = username;
+    private boolean verified;
+
+    public void setVerified(boolean verified)
+    {
+        this.verified = verified;
+    }
+    public boolean isVerified()
+    {
+        return verified;
+    }
+
+    public void setUuid(String uuid) {
+       this.uuid = uuid;
     }
 
     public void setPassword(String hashed) {
@@ -27,13 +38,14 @@ public class User {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUuid() {
+        return uuid;
     }
 
     public String getPassword() {
         return password;
     }
+
 
     // getters/setters
 }

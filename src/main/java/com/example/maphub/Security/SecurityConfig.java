@@ -26,24 +26,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .formLogin(form -> form
-                        .loginPage("/login.html")
-                        .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("/index.html", true)
-                        .permitAll()
-                )
+//                .formLogin(form -> form
+//                        .loginPage("/login.html")
+//                        .loginProcessingUrl("/auth/login")
+//                        .defaultSuccessUrl("/index.html", true)
+//                        .permitAll()
+//                )
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(
                                 new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
                         )
                 )
 
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/index.html")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                )
+//                .logout(logout -> logout
+//                        .logoutUrl("/logout")
+//                        .logoutSuccessUrl("/index.html")
+//                        .invalidateHttpSession(true)
+//                        .deleteCookies("JSESSIONID")
+//                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
