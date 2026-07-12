@@ -73,12 +73,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginObject request, HttpSession session) {
-        System.out.println(request.password);
-        System.out.println(request.username);
         String uuid = proxyAPIService.getUuid(request.username);
-        System.out.println(uuid);
         User user = userService.login(uuid, request.password);
-        System.out.println(user);
 
 
        if (user == null) {

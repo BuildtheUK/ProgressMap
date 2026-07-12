@@ -39,3 +39,4 @@ build/
 
 
 application.properties
+/.env

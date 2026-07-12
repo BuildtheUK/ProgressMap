@@ -19,9 +19,11 @@ import java.util.Random;
 @Transactional
 public class OTCService {
     private final OneTimeCodeRepository repo;
+    private final ProxyAPIService proxyAPIService;
 
-    public OTCService(OneTimeCodeRepository repo) {
+    public OTCService(OneTimeCodeRepository repo, ProxyAPIService proxyAPIService) {
         this.repo = repo;
+        this.proxyAPIService = proxyAPIService;
     }
 
     public boolean isValidCode(String uuid, int code){
@@ -47,7 +49,7 @@ public class OTCService {
         c.setPurpose(purpose);
         c.setExpiry(LocalDateTime.now().plusMinutes(15));
         c.setCode(new SecureRandom().nextInt(100000,999999));
-        System.out.println(c.getCode());
+        proxyAPIService.sendOTC(uuid,c.getCode());
         repo.save(c);
     }
 }

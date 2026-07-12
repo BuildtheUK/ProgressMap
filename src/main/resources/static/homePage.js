@@ -12,6 +12,7 @@ const noItemSelectedInfoBox = document.getElementById("NoItemSelected")
 const buildingName = document.getElementById("BuildingName")
 const buildingBuilder = document.getElementById("BuildingBuilder")
 const buildingCreationDate = document.getElementById("BuildingCreationDate")
+const profileIcon = document.getElementById("MCSkinLogo")
 var loggedIn = false;
 var username = ""
 window.addEventListener("load", () => {
@@ -50,7 +51,7 @@ window.addEventListener("load", () => {
             loggedOutDisplay();
         });
     var marker = L.marker([55, 0], {buildingId: 1}).addTo(map);
-    marker.on('click',(e) => displayBuildingBox(e.target.options.id))
+    marker.on('click',(e) => displayBuildingBox(e.target.options.buildingId))
     map.on('click', displayWelcomeBox)
 });
 
@@ -87,6 +88,9 @@ function loggedInDisplay(username){
     loginButton.onclick = ( () => {
         fetch("/logout", {method: "POST", credentials: "include"}).then(() => window.location.reload()).catch(err => console.log(err))
     })
+    profileIcon.style.cursor = "pointer";
+    profileIcon.onclick = (() => {window.location.assign("profile.html")})
+
 }
 
 function loggedOutDisplay(){
@@ -97,4 +101,6 @@ function loggedOutDisplay(){
     loginButton.onclick = ( () => {
         window.location.assign("login.html")
     })
+    profileIcon.style.cursor = "default";
+    profileIcon.onclick = null
 }

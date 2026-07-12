@@ -23,13 +23,25 @@ public class ProxyAPIService {
         this.objectMapper = om;
     }
 
+    public String getUsername(String uuid)
+    {
+        try{
+            String output = restClient.get().uri("/player/username/{uuid}",uuid).retrieve().body(String.class);
+            if (output == null || output.isBlank()){
+                return "";
+            }
+            return output;
+        }catch (Exception e){
+            return "";
+        }
+    }
+
     public String getUuid(String username) {
         try {
             String output = restClient.get()
-                    .uri("/player/{username}", username) // Automatically encodes URL variables
+                    .uri("/player/uuid/{username}", username) // Automatically encodes URL variables
                     .retrieve()
                     .body(String.class);
-            System.out.println(output);
             if (output == null || output.isBlank()) {
                 return "";
             }
@@ -37,6 +49,12 @@ public class ProxyAPIService {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public void sendOTC(String uuid, int token){
+
+        System.out.println(token);
+
     }
 
 

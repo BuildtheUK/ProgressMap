@@ -1,4 +1,5 @@
 package com.example.maphub;
+import com.example.maphub.services.ProxyAPIService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -13,6 +14,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    final private ProxyAPIService proxyAPIService;
+
+    public UserController(ProxyAPIService proxyAPIService) {
+        this.proxyAPIService = proxyAPIService;
+    }
+
     @GetMapping("/me")
     public ResponseEntity<?> me(Authentication auth) {
 
@@ -22,10 +30,11 @@ public class UserController {
                     .body(Map.of("loggedIn", false));
         }
 
+
         return ResponseEntity.ok(
                 Map.of(
                         "loggedIn", true,
-                        "username", auth.getName()
+                        "username", proxyAPIService.getUsername(auth.getName())
                 )
         );
     }
