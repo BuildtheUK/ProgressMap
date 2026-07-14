@@ -1,331 +1,503 @@
+/* ==========================================================================
+   1. IMPORTS & CUSTOM PROPERTIES (VARIABLES)
+   ========================================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-:root{
+:root {
     --accent-colour: #00247e;
-    --base-colour: #f2f2f0;
-    --text-dark-colour: black;
-    --input-colour: #dbdbdb;
-    --text-light-colour: white;
+    --accent-colour-dark: #00104A;
     --accent-colour-2: white;
+    --base-colour: #f2f2f0;
+    --input-colour: #dbdbdb;
+    --text-dark-colour: black;
+    --text-light-colour: white;
     --incorrect-colour: red;
-
+    --incorrect-colour-focussed: #910101;
 }
-html{
-    font-family: raleway, sans-serif;
+
+
+/* ==========================================================================
+   2. GLOBAL / BASE STYLES
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: Raleway, sans-serif;
     text-align: center;
 }
-*{
-    padding: 0;
+
+body {
     margin: 0;
 }
 
-.Page-Container{
+a {
+    text-decoration: none;
+}
+
+select {
+    width: 90%;
+}
+
+
+/* ==========================================================================
+   3. LAYOUT & CONTAINERS
+   ========================================================================== */
+
+.Page-Container {
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
     width: 100%;
-    
+    height: 100%;
 }
-body{
-    margin: 0;
-}
-#BTUKLogo{
-    height: 80%;
-    width: 80%;
-}
-.logo{
 
+.BackgroundPage {
+    background-image: url(images/big-ben.png);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
 }
-.NameBox{
+
+.content-container {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-}
-#serverIpNavBar{
-    align-self: flex-start;
-    color: var(--text-light-colour);
-    text-decoration: none;
-
-}
-.Nav-Bar h1{
-    color: var(--text-light-colour);
-}
-
-.ProfileBox{
-    display: flex;
-    max-width: 75px;
+    flex-grow: 1;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    margin-left: auto;
-    height: 100%;
-    margin-right: 10px;
-    gap: 5px;
+}
 
-}
-#MCSkinLogo{
-    border-radius: 100%;
-    width: 60%;
-}
-.loginButton{
-    text-decoration: none;
-    text-decoration-color: black;
-    font-weight: normal;
-    color: var(--text-dark-colour);
-    font-style: normal;
-}
-.Nav-Bar{
-    flex-grow: 0;
-    background-color: var(--accent-colour);
+
+/* ==========================================================================
+   4. NAVIGATION BAR
+   ========================================================================== */
+
+.Nav-Bar {
     display: flex;
+    flex-grow: 0;
     justify-content: flex-start;
     align-items: center;
     height: 75px;
+    background-color: var(--accent-colour);
 }
-.LogoBox{
+
+.Nav-Bar h1 {
+    color: var(--text-light-colour);
+}
+
+/* Logo & Server IP */
+.LogoBox {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     margin-left: 10px;
 }
-.content-container{
-    flex-grow: 1;
+
+.logo {
+
+}
+
+#BTUKLogo {
+    width: 80%;
+    height: 80%;
+}
+
+.NameBox {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+}
+
+#serverIpNavBar {
+    align-self: flex-start;
+    color: var(--text-light-colour);
+    text-decoration: none;
+}
+
+/* Profile / Login Box */
+.ProfileBox {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 75px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: 10px;
+    gap: 5px;
 }
-.map{
+
+#MCSkinLogo {
+    width: 60%;
+    border-radius: 100%;
+}
+
+.loginButton {
+    color: var(--text-dark-colour);
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    text-decoration-color: black;
+}
+
+
+/* ==========================================================================
+   5. MAIN MAP
+   ========================================================================== */
+
+.map {
     flex-grow: 1;
     flex-shrink: 1;
-
 }
-#map{
+
+#map {
     height: 100%;
 }
-.sidebar{
+
+
+/* ==========================================================================
+   6. SIDEBAR
+   ========================================================================== */
+
+.sidebar {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    background-color: var(--base-colour);
     flex-grow: 0;
     flex-shrink: 1;
+    justify-content: center;
     width: 250px;
-
     height: 100%;
+    background-color: var(--base-colour);
 }
-.SidebarBox{
+
+.SidebarBox {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     padding-top: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
 }
-.ItemInfoBox{
 
-     border-bottom: 2px black solid;
-     display: none;
-
+.sidebarTitle {
+    margin: 0;
+    font-size: medium;
+    font-weight: bold;
 }
-.ListEditBox{
+
+/* Sidebar Components */
+.ItemInfoBox {
+    display: none;
+    border-bottom: 2px black solid;
+}
+
+.LayerBox {
+    border-bottom: 2px black solid;
+}
+
+.ListEditBox {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
     gap: 10px;
-
 }
-.ListDisplayBox{
-    background-color: var(--input-colour);
-    border: gray solid 1px;
-    text-wrap:  wrap;
-    flex-shrink: 1;
+
+.ListDisplayBox {
     width: 100%;
+    flex-shrink: 1;
+    background-color: var(--input-colour);
+    border: 1px solid gray;
+    text-wrap: wrap;
 }
-.StatsBox{
+
+.StatsBox {
 
 }
-.LayerBox{
-        border-bottom: 2px black solid;
-}
-.sidebarTitle{
-    margin: 0;
-    font-weight: bold;
-    font-size: medium;
-}
-.StatsInput{
+
+.StatsInput {
     display: flex;
     justify-content: flex-start;
     width: 90%;
-    gap:5px;
+    gap: 5px;
+}
 
-}
-select{
-    width:90%;
-}
-.AccountForm{
-    background-color: var(--base-colour);
+
+/* ==========================================================================
+   7. FORMS & ACCOUNT MANAGEMENT
+   ========================================================================== */
+
+.AccountForm {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    flex-direction: column;
     width: 350px;
     padding: 10px;
-    gap:10px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: var(--base-colour);
 }
 
-.AccountForm h2{
-    font-weight: 900;
+.AccountForm h2 {
     font-size: 2rem;
+    font-weight: 900;
 }
 
-form{
+/* Generic Form Layout */
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.FormInput{
-    width: 100%;
+.FormInput {
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
-.AccountForm form label{
-    height: 50px;
-    width: 50px;
-    background-color: var(--accent-colour);
-    border-radius: 10px 0 0 10px;
+/* Labels & Icons */
+.AccountForm form label {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px 0 0 10px;
+    background-color: var(--accent-colour);
 }
-.AccountForm form label svg{
+
+.AccountForm form label svg {
     fill: var(--accent-colour-2);
 }
-.AccountForm form input{
+
+/* Input Fields */
+.AccountForm form input {
     box-sizing: border-box;
     flex-grow: 1;
     height: 50px;
     padding: 1em;
-    border-radius:  0 10px 10px 0;
     border: 2px solid var(--input-colour);
     border-left: none;
+    border-radius: 0 10px 10px 0;
     background-color: var(--input-colour);
     transition: 150ms ease;
-
 }
 
-.AccountForm form input.passwordBox{
-    border-radius: 0;
+.AccountForm form input.passwordBox {
     border-right: none;
+    border-radius: 0;
 }
 
-form input:hover{
+form input:hover {
     border-color: var(--accent-colour);
 }
 
-form input:focus{
+form input:focus {
     outline: none;
     border-color: var(--text-dark-colour);
 }
 
-div:has(input:focus) > label, div:has(input:focus) > button{
+div:has(input:focus) > label,
+div:has(input:focus) > button {
     background-color: var(--text-dark-colour);
 }
 
-form button{
+
+
+/* Form Buttons */
+.button {
     margin-top: 10px;
+    padding: 0.85em 4em;
     border: none;
     border-radius: 1000px;
-    padding: 0.85em 4em;
     background-color: var(--accent-colour);
+    color: var(--text-light-colour);
     font: inherit;
     font-weight: 600;
-    cursor: pointer;
     text-transform: uppercase;
-    color: var(--text-light-colour);
+    cursor: pointer;
 }
-form button:hover{
-    background-color: var(--text-dark-colour);
+
+.button:hover {
+    background-color: var(--accent-colour-dark);
 }
-form button:focus{
+
+.button:focus {
     outline: none;
 }
 
-form button:focus-visible{
+.button:focus-visible {
     outline: none;
     background-color: var(--text-dark-colour);
 }
 
-.showPassword{
-    padding: 0 0.5em;
+.button:active {
+    background-color: var(--text-dark-colour);
+    color: var(--text-dark-colour);
+}
+
+.showPassword {
     margin-top: 0;
-    border-radius:  0 10px 10px 0;
+    padding: 0 0.5em;
+    border-radius: 0 10px 10px 0;
 }
 
-a{
-    text-decoration: none;
-}
-.BackgroundPage{
-    background-image: url(images/big-ben.png);
-    background-size: cover;
-    background-position: center ;
-    overflow: hidden;
-}
-
-
-.incorrect button{
-    background-color: var(--incorrect-colour) !important;
-}
+/* Error States */
+.incorrect button,
 .incorrect label {
     background-color: var(--incorrect-colour) !important;
 }
-.incorrect input{
+
+.incorrect input {
     border-color: var(--incorrect-colour) !important;
 }
-#errorMessage{
+
+#errorMessage {
     color: var(--incorrect-colour);
 }
+/* ==========================================================================
+   8. PROFILE PAGE
+   ========================================================================== */
+.content-container:has(.ProfileView) {
+    overflow-y: auto;          /* Enables vertical scrolling inside the content area */
+    padding: 30px 0;           /* Creates equal spacing at the top and bottom when scrolled */
+    box-sizing: border-box; /* Ensures padding is included in height calculations */
+}
 
-@media only screen and (max-width: 450px){
-    .content-container{
+/* Ensure the profile card centers nicely when short and scrolls cleanly when tall */
+.ProfileView {
+    margin: auto;              /* Keeps the card centered and respects container padding */
+}
+
+
+#ProfilePhoto {
+    width: 60%;
+    border-radius: 100%;
+}
+
+.DangerButton{
+    background-color: var(--incorrect-colour);
+}
+
+.DangerButton:hover{
+    background-color: var(--incorrect-colour-focussed);
+}
+
+.DangerButton:active {
+    background-color: var(--text-dark-colour);
+}
+#ProfileStatsBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Popup{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+
+}
+
+.Popup.open{
+    display: flex;
+
+}
+
+.PopupInner{
+    background-color: var(--base-colour);
+    border-radius: 5px;
+    box-shadow: 0 1px 4px var(--text-dark-colour);
+    padding: 15px 25px;
+    max-width: 90%;          /* Prevents popup from overflowing small screens */
+    width: max-content;      /* Fits closely around the content */
+    box-sizing: border-box;
+}
+
+#buttonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;         /* Allows buttons to stack vertically when space is tight */
+    gap: 10px;               /* Creates a clean gap between the buttons */
+    margin-top: 15px;
+    width: 100%;
+}
+
+/* ==========================================================================
+   8. MEDIA QUERIES (RESPONSIVE DESIGN)
+   ========================================================================== */
+
+@media only screen and (max-width: 450px) {
+    .Nav-Bar {
+        height: 100px;
+        text-align: left;
+    }
+
+    .content-container {
         flex-direction: column;
     }
-    .sidebar{
-        flex-direction: row;
-        height: 250px;
+
+    .content-container:has(.ProfileView) {
+        padding: 0;
+    }
+
+    .map {
         width: 100%;
     }
-    .map{width: 100%;}
-    .ItemInfoBox{
-        border-bottom: none;
-        border-right: 2px black solid;
+
+    .sidebar {
+        flex-direction: row;
+        width: 100%;
+        height: 250px;
     }
-    .LayerBox{
+
+    .ItemInfoBox {
         border-right: 2px black solid;
         border-bottom: none;
     }
-    .AccountForm{
+
+    .LayerBox {
+        border-right: 2px black solid;
+        border-bottom: none;
+    }
+
+    .AccountForm {
+        box-sizing: border-box;
         width: 100%;
         height: 100%;
         border-radius: 0;
-        box-sizing: border-box;
+        overflow-y: auto;
+    }
+    .ProfileView{
+        justify-content: flex-start; /* Prevents flex centering from clipping top elements */
+        padding-top: 25px;           /* Ensures H1 starts with clear spacing at the top */
+        padding-bottom: 25px;
+    }
 
-    }
-    .Nav-Bar{
-        text-align: left;
-        height: 100px;
-    }
 }

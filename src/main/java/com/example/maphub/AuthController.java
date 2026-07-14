@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.plaf.synth.SynthTabbedPaneUI;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +95,18 @@ public class AuthController {
     public ResponseEntity<?> logout(HttpSession session) {
         session.invalidate();
         return ResponseEntity.ok("Logged out");
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteAccount(Principal principal, HttpSession session) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body("Not authenticated");
+        }
+        // principal.getName() returns the 'uuid' set as the Principal
+        String uuid = principal.getName();
+        userService.deleteByUuid(uuid);
+        logout(session);
+        return ResponseEntity.ok("Account deleted");
     }
 
     private void createAuthenticatedSession(String uuid, String username, HttpSession session) {

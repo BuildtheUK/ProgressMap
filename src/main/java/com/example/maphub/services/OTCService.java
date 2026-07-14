@@ -49,7 +49,10 @@ public class OTCService {
         c.setPurpose(purpose);
         c.setExpiry(LocalDateTime.now().plusMinutes(15));
         c.setCode(new SecureRandom().nextInt(100000,999999));
-        proxyAPIService.sendOTC(uuid,c.getCode());
+        boolean success = proxyAPIService.sendOTC(uuid,c.getCode());
+        if (!success){
+            throw new RuntimeException("Unable to send OTC");
+        }
         repo.save(c);
     }
 }

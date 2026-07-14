@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="Profile.js" defer></script>
 </head>
 <body>
     <div class="Page-Container">
@@ -22,12 +23,31 @@
             </div>
         </div>
         <div class="content-container BackgroundPage">
-            <div class="ProfileView">
-                <h2>Name</h2>
-                <img alt="McSkinHead" src="images/channels4_profile.jpg">
-                <button>Reset Password</button>
-                <button>Delete website account</button>
+            <div class="ProfileView AccountForm">
+                <h1>Profile</h1>
+                <img alt="McSkinHead" src="images/channels4_profile.jpg" id="ProfilePhoto">
+                <h2>name</h2>
+                <div id="ProfileStatsBox">
+                    <h3>Stats</h3>
+                    <p>Buildings built: </p>
+                    <p>Area Claimed: </p>
+                    <p>Area Complete: </p>
+                    <p>Time Online: </p>
+                    <p>Time afk: </p>
+                </div>
+                <button class="button" id="btnResetPassword">Reset Password</button>
+                <button class="button DangerButton" id="btnDeleteAccount">Delete website account</button>
 
+            </div>
+        </div>
+    </div>
+    <div class="Popup" id="DeleteAccountPopup">
+        <div class="PopupInner">
+            <h2>Danger Zone!</h2>
+            <p>Deleting an account cannot be undone. Do you wish to proceed?</p>
+            <div id="buttonContainer">
+            <button class="button DangerButton" id="btnConfirmDeleteAccount">Delete Account</button>
+            <button class="button" id="btnSafety">Go Back</button>
             </div>
         </div>
     </div>
