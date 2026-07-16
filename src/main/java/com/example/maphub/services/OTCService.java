@@ -26,10 +26,10 @@ public class OTCService {
         this.proxyAPIService = proxyAPIService;
     }
 
-    public boolean isValidCode(String uuid, int code){
+    public boolean isValidCode(String uuid, int code,String purpose){
             return repo.findByUuidAndCode(uuid, code)
                     .map(otc -> {
-                        if (LocalDateTime.now().isBefore(otc.getExpiry())) {
+                        if (LocalDateTime.now().isBefore(otc.getExpiry()) && otc.getPurpose().equals(purpose)) {
                             repo.delete(otc);
                             return true;
                         }

@@ -50,6 +50,11 @@ public class UserService {
             });
     }
 
+    public void updatePassword(String uuid, String password){
+        String hashed = PasswordUtil.hash(password);
+        repo.updatePasswordByUuid(uuid,hashed);
+    }
+
     public void deleteByUuid(String uuid){
         repo.deleteByUuid(uuid);
     }

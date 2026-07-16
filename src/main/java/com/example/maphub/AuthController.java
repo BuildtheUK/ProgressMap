@@ -32,6 +32,36 @@ public class AuthController {
         this.proxyAPIService = proxyAPIService;
     }
 
+    @PostMapping("/newOTC")
+    public ResponseEntity<?> newOTC(@RequestBody NewOTCRequest request){
+        String uuid = proxyAPIService.getUuid(request.username);
+        if (uuid.isEmpty() || !userService.userExists(uuid)){
+            return ResponseEntity.badRequest().body("Invalid username");
+
+        }
+        otcService.createOneTimeCode(uuid,request.purpose);
+        return ResponseEntity.ok().body("New OTC created");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword( @RequestBody OTCResetPasswordRequest request) {
+        String uuid = proxyAPIService.getUuid(request.username);
+        if (uuid.isEmpty()) {
+            return ResponseEntity.badRequest().body("Invalid user");
+        }
+        if (!otcService.isValidCode(uuid, request.otc, "RESETPASSWORD")) {
+            return ResponseEntity.badRequest().body("Invalid or expired code");
+        }
+
+        List<String> passwordErrors = passwordValidationService.validate(request.newPassword);
+        if (!passwordErrors.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("errors", passwordErrors));
+        }
+        userService.updatePassword(uuid, PasswordUtil.hash(request.newPassword));
+
+        return ResponseEntity.ok("Password has been reset successfully. Please log in.");
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody LoginUser user) {
         String uuid = proxyAPIService.getUuid(user.username);
@@ -61,12 +91,12 @@ public class AuthController {
 
         String uuid = proxyAPIService.getUuid(result.username);
 
-        if (otcService.isValidCode(uuid,result.otc))
+        if (otcService.isValidCode(uuid,result.otc,"REGISTER"))
         {
             userService.verifyUser(uuid);
         }
 
-        createAuthenticatedSession(uuid, result.username,session);
+        createAuthenticatedSession(uuid,session);
 
         return ResponseEntity.ok(Map.of("success", true));
     }
@@ -77,16 +107,20 @@ public class AuthController {
         String uuid = proxyAPIService.getUuid(request.username);
         User user = userService.login(uuid, request.password);
 
+        return logInUser(user,session);
 
-       if (user == null) {
-           return ResponseEntity.status(401).body("Invalid credentials");
-       }
-       if (!user.isVerified())
-       {
-           return ResponseEntity.status(401).body("Account not verified");
-       }
+    }
 
-        createAuthenticatedSession(uuid,request.username,session);
+    public ResponseEntity<?> logInUser(User user, HttpSession session){
+        if (user == null) {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
+        if (!user.isVerified())
+        {
+            return ResponseEntity.status(401).body("Account not verified");
+        }
+
+        createAuthenticatedSession(user.getUuid(),session);
         System.out.println("SESSION ID (login): " + session.getId());
         return ResponseEntity.ok("Logged in");
     }
@@ -97,19 +131,9 @@ public class AuthController {
         return ResponseEntity.ok("Logged out");
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<?> deleteAccount(Principal principal, HttpSession session) {
-        if (principal == null) {
-            return ResponseEntity.status(401).body("Not authenticated");
-        }
-        // principal.getName() returns the 'uuid' set as the Principal
-        String uuid = principal.getName();
-        userService.deleteByUuid(uuid);
-        logout(session);
-        return ResponseEntity.ok("Account deleted");
-    }
 
-    private void createAuthenticatedSession(String uuid, String username, HttpSession session) {
+
+    private void createAuthenticatedSession(String uuid, HttpSession session) {
 
 
         UsernamePasswordAuthenticationToken auth =
@@ -123,7 +147,6 @@ public class AuthController {
         session.setAttribute("SPRING_SECURITY_CONTEXT",
                 SecurityContextHolder.getContext());
         session.setAttribute("uuid", uuid);
-        session.setAttribute("username", username);
 
     }
 
