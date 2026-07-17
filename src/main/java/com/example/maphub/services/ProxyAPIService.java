@@ -3,6 +3,7 @@ package com.example.maphub.services;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -40,14 +41,14 @@ public class ProxyAPIService {
     private final ObjectMapper objectMapper;
 
 
-    public ProxyAPIService() {
+    public ProxyAPIService(@Value("${api.proxy.base-url}") String baseUrl) {
 
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout(Duration.ofSeconds(5));
         requestFactory.setReadTimeout(Duration.ofSeconds(5));
 
         this.restClient = RestClient.builder()
-                .baseUrl("http://51.195.190.215:61101/api")
+                .baseUrl(baseUrl)
                 .requestFactory(requestFactory) // Critical fix
                 .build();
 
