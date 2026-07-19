@@ -270,7 +270,7 @@ form {
 }
 
 /* Labels & Icons */
-.AccountForm form label {
+.FormInput label {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -280,12 +280,12 @@ form {
     background-color: var(--accent-colour);
 }
 
-.AccountForm form label svg {
+.FormInput label svg {
     fill: var(--accent-colour-2);
 }
 
 /* Input Fields */
-.AccountForm form input {
+.FormInput input {
     box-sizing: border-box;
     flex-grow: 1;
     height: 50px;
@@ -297,16 +297,16 @@ form {
     transition: 150ms ease;
 }
 
-.AccountForm form input.passwordBox {
+.FormInput input.passwordBox {
     border-right: none;
     border-radius: 0;
 }
 
-form input:hover {
+.FormInput input:hover {
     border-color: var(--accent-colour);
 }
 
-form input:focus {
+.FormInput input:focus {
     outline: none;
     border-color: var(--text-dark-colour);
 }
@@ -407,6 +407,10 @@ div:has(input:focus) > button {
     flex-direction: column;
 }
 
+/* ==========================================================================
+   POPUP
+   ========================================================================== */
+
 .Popup{
     position: fixed;
     top: 0;
@@ -436,6 +440,10 @@ div:has(input:focus) > button {
     max-width: 90%;          /* Prevents popup from overflowing small screens */
     width: max-content;      /* Fits closely around the content */
     box-sizing: border-box;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #buttonContainer{
@@ -445,9 +453,20 @@ div:has(input:focus) > button {
     flex-direction: row;
     flex-wrap: wrap;         /* Allows buttons to stack vertically when space is tight */
     gap: 10px;               /* Creates a clean gap between the buttons */
-    margin-top: 15px;
     width: 100%;
 }
+
+#passwordToDelete{
+    max-width: 350px;
+    width: 90%
+}
+
+/* ==========================================================================
+   Forgot Password
+   ========================================================================== */
+
+
+
 
 /* ==========================================================================
    8. MEDIA QUERIES (RESPONSIVE DESIGN)

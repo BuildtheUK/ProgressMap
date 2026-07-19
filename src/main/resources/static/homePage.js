@@ -86,10 +86,10 @@ function loggedInDisplay(username){
     displayWelcomeBox()
     loginButton.innerText = "Logout"
     loginButton.onclick = ( () => {
-        fetch("/logout", {method: "POST", credentials: "include"}).then(() => window.location.reload()).catch(err => console.log(err))
+        fetch("/auth/logout", {method: "POST", credentials: "include"}).then(() => window.location.reload()).catch(err => console.log(err))
     })
     profileIcon.style.cursor = "pointer";
-    profileIcon.onclick = (() => {window.location.assign("profile.html")})
+    profileIcon.onclick = (() => {window.location.assign("Profile.html")})
 
 }
 

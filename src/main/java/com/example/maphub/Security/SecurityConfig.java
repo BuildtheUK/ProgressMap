@@ -59,7 +59,7 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/favicon.ico"
                         ).permitAll()
-                        .requestMatchers("/user/me").authenticated()
+                        .requestMatchers("/user/me","/Profile.html").authenticated()
                         .anyRequest().authenticated()
 
                 )
