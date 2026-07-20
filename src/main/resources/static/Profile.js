@@ -50,3 +50,8 @@ passwordInput.addEventListener('input', ()=> {
         errorMessage.innerText= ''
     }
 })
+
+const btnChangePassword = document.getElementById("btnChangePassword")
+btnChangePassword.addEventListener("click", () => {
+    window.location.assign("ChangePassword.html")
+})

@@ -17,6 +17,7 @@ const otcBottomBar = document.getElementById("enterCodeBottomBar")
 const errorMessage = document.getElementById("errorMessage")
 const successMessage = document.getElementById("successMessage")
 const requestNewOtc = document.getElementById("btnResendCode")
+const infoBox = document.getElementById("infoMessage")
 
 initiatePasswordBoxButtons()
 
@@ -45,6 +46,7 @@ usernameForm.addEventListener("submit" , (e) => {
         usernameBottomBar.style.display = "none"
         otcBottomBar.style.display = "flex"
         otcForm.style.display = "flex"
+        infoBox.innerText = "Log onto btuk.org to see your one time code"
     }).catch(err => {console.error(err); errorMessage.innerText = "Unable to send OTC"});
 } )
 
@@ -60,6 +62,7 @@ otcForm.addEventListener("submit" , (e) => {
     otcForm.style.display = "none"
     passwordForm.style.display = "flex"
     usernameBottomBar.display = "flex"
+    infoBox.innerText = "Please enter a new password"
 } )
 
 passwordForm.addEventListener("submit", (e) => {

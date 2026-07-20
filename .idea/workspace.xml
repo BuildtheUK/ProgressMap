@@ -4,22 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="added backend params">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/PasswordUtils.js" afterDir="false" />
+    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="modified js layout a bit for better code reuse. added js for forgetting password.">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/ChangePassword.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/example-application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example-application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/AccountCreation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/ChangePassword.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ChangePassword.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/ForgotPassword.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ForgotPassword.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/PasswordUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/PasswordUtils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/Profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/Profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/forgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/forgotPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/signUp.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/signUp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/verification.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/verification.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +155,7 @@
       <workItem from="1783980244052" duration="3985000" />
       <workItem from="1784065446830" duration="11327000" />
       <workItem from="1784305674962" duration="3738000" />
-      <workItem from="1784498745787" duration="8459000" />
+      <workItem from="1784498745787" duration="10796000" />
     </task>
     <task id="LOCAL-00001" summary="Login system working with local database. probably still has a lot of work to do">
       <option name="closed" value="true" />
@@ -219,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784240386785</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="modified js layout a bit for better code reuse. added js for forgetting password.">
+      <option name="closed" value="true" />
+      <created>1784584865992</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1784584865992</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +235,7 @@
     <MESSAGE value="Added docker config files should build with docker compose now. a .env file will need to be added for db setup. Also added a way to get to the profile page" />
     <MESSAGE value="Added profile page and ability to delete account" />
     <MESSAGE value="Added remaining endpoints for user management logic. updated delete to require a password (Frontend still TODO)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added remaining endpoints for user management logic. updated delete to require a password (Frontend still TODO)" />
+    <MESSAGE value="modified js layout a bit for better code reuse. added js for forgetting password." />
+    <option name="LAST_COMMIT_MESSAGE" value="modified js layout a bit for better code reuse. added js for forgetting password." />
   </component>
 </project>
