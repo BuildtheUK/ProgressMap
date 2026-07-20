@@ -57,7 +57,7 @@ public class AuthController {
         if (!passwordErrors.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("errors", passwordErrors));
         }
-        userService.updatePassword(uuid, PasswordUtil.hash(request.newPassword));
+        userService.updatePassword(uuid, request.newPassword);
 
         return ResponseEntity.ok("Password has been reset successfully. Please log in.");
     }
@@ -91,11 +91,11 @@ public class AuthController {
 
         String uuid = proxyAPIService.getUuid(result.username);
 
-        if (otcService.isValidCode(uuid,result.otc,"REGISTER"))
+        if (!otcService.isValidCode(uuid,result.otc,"REGISTER"))
         {
-            userService.verifyUser(uuid);
+            return ResponseEntity.badRequest().body("Invalid or expired code");
         }
-
+        userService.verifyUser(uuid);
         createAuthenticatedSession(uuid,session);
 
         return ResponseEntity.ok(Map.of("success", true));
