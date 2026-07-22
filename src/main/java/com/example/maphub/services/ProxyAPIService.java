@@ -2,8 +2,10 @@ package com.example.maphub.services;
 
 
 
+import com.example.maphub.entities.BuildingDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -14,17 +16,9 @@ import org.springframework.web.client.RestClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-
-import java.net.URI;
-
-import java.net.http.HttpClient;
-
-import java.net.http.HttpRequest;
-
-import java.net.http.HttpResponse;
-
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 
@@ -147,5 +141,100 @@ public class ProxyAPIService {
         }
         return success;
     }
+
+    /**
+     * Fetches full building objects inside an area with optional privacy filtering for a player
+     */
+    public List<BuildingDTO> getBuildingsByArea(double minLat, double maxLat, double minLon, double maxLon, String playerUuid) {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> {
+                        var builder = uriBuilder.path("/buildings/area")
+                                .queryParam("minLat", minLat)
+                                .queryParam("maxLat", maxLat)
+                                .queryParam("minLon", minLon)
+                                .queryParam("maxLon", maxLon);
+                        if (playerUuid != null && !playerUuid.isBlank()) {
+                            builder.queryParam("playerUuid", playerUuid);
+                        }
+                        return builder.build();
+                    })
+                    .retrieve()
+                    .body(new ParameterizedTypeReference<List<BuildingDTO>>() {});
+        } catch (Exception e) {
+            System.err.println("Error fetching buildings by area: " + e.getMessage());
+            return List.of();
+        }
+    }
+
+    /**
+     * Gets building counts with optional filtering by area, players, visibility, or source
+     */
+    public int getBuildingCount(List<String> playerUuids, Double minLat, Double maxLat, Double minLon, Double maxLon, Boolean isPublic, Boolean playerBuilt) {
+        try {
+            BuildingCountDTO response = restClient.get()
+                    .uri(uriBuilder -> {
+                        var builder = uriBuilder.path("/buildings/count");
+                        if (minLat != null) builder.queryParam("minLat", minLat);
+                        if (maxLat != null) builder.queryParam("maxLat", maxLat);
+                        if (minLon != null) builder.queryParam("minLon", minLon);
+                        if (maxLon != null) builder.queryParam("maxLon", maxLon);
+                        if (isPublic != null) builder.queryParam("isPublic", isPublic);
+                        if (playerBuilt != null) builder.queryParam("playerBuilt", playerBuilt);
+                        if (playerUuids != null && !playerUuids.isEmpty()) {
+                            for (String uuid : playerUuids) {
+                                builder.queryParam("playerUuid", uuid);
+                            }
+                        }
+                        return builder.build();
+                    })
+                    .retrieve()
+                    .body(BuildingCountDTO.class);
+
+            return response != null ? response.count() : 0;
+        } catch (Exception e) {
+            System.err.println("Error fetching building count: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    public record BuildingCountDTO(int count) {}
+
+    /**
+     * Gets aggregated building counts mapped over a grid for heatmaps and zoomed-out map views
+     */
+    public BuildingGridResponseDTO getBuildingGridCount(double minLat, double maxLat, double minLon, double maxLon, double latStep, double lonStep, String playerUuid) {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> {
+                        var builder = uriBuilder.path("/buildings/grid-count")
+                                .queryParam("minLat", minLat)
+                                .queryParam("maxLat", maxLat)
+                                .queryParam("minLon", minLon)
+                                .queryParam("maxLon", maxLon)
+                                .queryParam("stepLat", latStep)
+                                .queryParam("stepLon", lonStep);
+                        if (playerUuid != null && !playerUuid.isBlank()) {
+                            builder.queryParam("playerUuid", playerUuid);
+                        }
+                        return builder.build();
+                    })
+                    .retrieve()
+                    .body(BuildingGridResponseDTO.class);
+        } catch (Exception e) {
+            System.err.println("Error fetching grid building count: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public record GridCellDTO(
+            double lat,
+            double lon,
+            int count
+    ) {}
+
+    public record BuildingGridResponseDTO(
+            List<GridCellDTO> cells
+    ) {}
     
 }

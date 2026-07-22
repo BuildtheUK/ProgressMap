@@ -58,7 +58,8 @@ public class SecurityConfig {
                                 "/**/*.js",
                                 "/images/**",
                                 "/favicon.ico",
-                                "/ForgotPassword.html"
+                                "/ForgotPassword.html",
+                                "/building/**"
                         ).permitAll()
                         .requestMatchers("/user/me","/Profile.html").authenticated()
                         .anyRequest().authenticated()
