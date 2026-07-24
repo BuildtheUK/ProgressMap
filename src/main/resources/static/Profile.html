@@ -22,19 +22,25 @@
                 </a>
             </div>
         </div>
-        <div class="content-container BackgroundPage">
+        <div class="form-container BackgroundPage">
             <div class="ProfileView AccountForm">
                 <h1>Profile</h1>
-                <img alt="McSkinHead" src="images/channels4_profile.jpg" id="ProfilePhoto">
-                <h2>name</h2>
+                <img alt="McSkinHead" src="images/blankProfile.svg" id="ProfilePhoto">
+                <h2 id="profileName">name</h2>
+                <hr class="ProfileDivider" >
                 <div id="ProfileStatsBox">
-                    <h3>Stats</h3>
-                    <p>Buildings built: </p>
-                    <p>Area Claimed: </p>
-                    <p>Area Complete: </p>
-                    <p>Time Online: </p>
-                    <p>Time afk: </p>
+                    <p class="sidebarTitle">Stats</p>
+                    <div class="StatCard">
+                        <span class="StatLabel">Buildings built</span>
+                        <strong class="StatValue" id="buildingsBuilt">--</strong>
+                    </div>
+<!--                    <p>Buildings built: </p>-->
+<!--                    <p>Area Claimed: </p>-->
+<!--                    <p>Area Complete: </p>-->
+<!--                    <p>Time Online: </p>-->
+<!--                    <p>Time afk: </p>-->
                 </div>
+                <hr class="ProfileDivider" >
                 <button class="button" id="btnChangePassword">Change Password</button>
                 <button class="button DangerButton" id="btnDeleteAccount">Delete website account</button>
 

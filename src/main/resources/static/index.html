@@ -36,58 +36,61 @@
     <div class="content-container"> 
         <div class="map" id="map"></div>
         <div class="sidebar">
-            <div class="ItemInfoBox SidebarBox" id="RegionInfoBox">
-                <p class="sidebarTitle">Region Info</p>
-                <label for="RegionName"></label><input type="text" value="Name" id="RegionName"></input>
-                <div class="ListEditBox">
-                    <div class="ListDisplayBox">
-                        name1, name2, name3
+                <div class="ItemInfoBox SidebarBox" id="NoItemSelected">
+                    <p class="sidebarTitle" id="welcomeTitle">Welcome</p>
+                    <p id="welcomeMessage">Have a look around or create an account to link to your Minecraft account</p>
+                </div>
+
+            <hr class="SidebarDivider" id="sidebarDivider">
+
+                <div class="ItemInfoBox SidebarBox" id="ServerStatsBox" style="display: none;">
+                    <p class="sidebarTitle">Server Statistics</p>
+                    <div class="StatCard">
+                        <span class="StatLabel">Buildings Made</span>
+                        <strong class="StatValue" id="statBuildings">--</strong>
                     </div>
-                    <button class="Button">+</button>
+                    <div class="StatCard">
+                        <span class="StatLabel">Percentage Complete</span>
+                        <strong class="StatValue" id="statProgress">--%</strong>
+                    </div>
                 </div>
-                <p>Area: </p>
-                <p>Number Of Buildings: </p>
-                <p>Percentage Complete: </p>
-                <p>Last Update: </p>
-                <button>Edit Claim</button>
-            </div>
-            <div class="ItemInfoBox SidebarBox" id="BuildingInfoBox">
-                <p class="sidebarTitle">Building Info</p>
-                <label for="BuildingName"></label><input type="text" value="Name" id="BuildingName"></input>
-                <p id="BuildingBuilder">Builder: </p> <button class="Button" id="ClaimUnclaimed">Claim</button>
-                <p id="BuildingCreationDate">Created on: </p>
-            </div>
-            <div class="ItemInfoBox SidebarBox" id="NoItemSelected">
-                <p>Welcome to BTUK Progress Map. <br> Have a look around or Create an account to link to your Minecraft account</p>
-            </div>
-            <div class="LayerBox SidebarBox">
-                <p class="sidebarTitle">Layers</p>
-                <div class="LayerItem">
-                    <input type="checkbox" id="buildings" checked="true">
-                    <label for="buildings">Buildings</label>
+
+                <div class="ItemInfoBox SidebarBox" id="BuildingInfoBox" style="display: none;">
+                    <button class="CloseBoxBtn" id="btnCloseBuilding" title="Close">&times;</button>
+                    <p class="sidebarTitle">Building Info</p>
+                    <div class="StatCard">
+                        <span class="StatLabel">Building Id</span>
+                        <strong class="StatValue" id="buildingId">--</strong>
+                    </div>
+                    <div class="StatCard">
+                        <span class="StatLabel">Builder</span>
+                        <strong class="StatValue" id="buildingBuilder">--</strong>
+                    </div>
+                    <div class="StatCard">
+                        <span class="StatLabel">Date built</span>
+                        <strong class="StatValue" id="buildingCreatedDate">--</strong>
+                    </div>
+                    <div class="StatCard">
+                        <span class="StatLabel">Is claimed</span>
+                        <strong class="StatValue" id="isClaimed">--</strong>
+                    </div>
                 </div>
-                <div class="LayerItem">
-                                        <input type="checkbox" id="areas" checked="true">
-                    <label for="areas">Areas</label>
+
+                <div class="ItemInfoBox SidebarBox" id="RegionInfoBox" style="display: none;">
+                    <button class="CloseBoxBtn" id="closeRegionBtn" title="Close">&times;</button>
+                    <p class="sidebarTitle">Region Info</p>
+                    <label for="RegionName"></label>
+                    <input type="text" value="Name" id="RegionName">
+                    <div class="ListEditBox">
+                        <div class="ListDisplayBox">name1, name2, name3</div>
+                        <button class="button">+</button>
+                    </div>
+                    <p>Area: </p>
+                    <p>Number Of Buildings: </p>
+                    <p>Percentage Complete: </p>
+                    <p>Last Update: </p>
+                    <button class="button">Edit Claim</button>
                 </div>
-            </div>
-            <div class="StatsBox SidebarBox">
-                <p class="sidebarTitle">Statistics</p>
-                <div class="StatsInput">
-                <p>Player: </p>
-                <select name="Player">
-                    <option selected="selected">All</option>
-                </select>
-                </div>
-                <div class="StatsInput">
-                <p>Region: </p>
-                <select name="region">
-                    <option selected="selected">All</option>
-                </select>
-                </div>
-                <P>Buildings made: </P>
-                <p>Percentage complete: </p>
-            </div>
         </div>
     </div>
     </div>

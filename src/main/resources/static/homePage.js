@@ -9,12 +9,10 @@ const loginButton = document.getElementById("btnLogin")
 const regionInfoBox = document.getElementById("RegionInfoBox")
 const buildingInfoBox = document.getElementById("BuildingInfoBox")
 const noItemSelectedInfoBox = document.getElementById("NoItemSelected")
-const buildingName = document.getElementById("BuildingName")
-const buildingBuilder = document.getElementById("BuildingBuilder")
-const buildingCreationDate = document.getElementById("BuildingCreationDate")
 const profileIcon = document.getElementById("MCSkinLogo")
 var loggedIn = false;
 var username = ""
+var buildingSelected = false;
 
 
 const gridMarkerGroup = L.layerGroup().addTo(map);
@@ -25,6 +23,30 @@ const stepIcon = L.icon({
     iconUrl: 'images/BlueCircle.png',
     iconSize: [40, 40],
     iconAnchor: [20, 20] // Sets the anchor to the center (half of 40x40)
+});
+
+const redBuilding = L.icon({
+    iconUrl: 'images/redBuilding.png',
+
+    iconSize:     [30, 30], // size of the icon
+    iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
+    popupAnchor:  [15, 30]
+});
+
+const greenBuilding = L.icon({
+    iconUrl: 'images/greenBuilding.png',
+
+    iconSize:     [30, 30], // size of the icon
+    iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
+    popupAnchor:  [15, 30]
+});
+
+const orangeBuilding = L.icon({
+    iconUrl: 'images/orangeBuilding.png',
+
+    iconSize:     [30, 30], // size of the icon
+    iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
+    popupAnchor:  [15, 30]
 });
 
 window.addEventListener("load", () => {
@@ -68,6 +90,7 @@ window.addEventListener("load", () => {
     // Initial load when map opens
 
     updateLayers()
+    loadServerStats()
 
     // var marker = L.marker([55, 0], {buildingId: 1}).addTo(map);
     // marker.on('click',(e) => displayBuildingBox(e.target.options.buildingId))
@@ -79,6 +102,8 @@ map.on("moveend", () => {
 
     updateLayers()
 });
+
+map.on("click",() => {if (buildingSelected){displayWelcomeBox(); buildingSelected = false}})
 
 function updateLayers(){
     if (map.getZoom() >= 17){
@@ -125,14 +150,25 @@ async function updateBuildingsInView(){
 
         buildings.forEach(building => {
             // Create a standard or custom marker at building coordinates
-            const marker = L.marker([building.lat, building.lon]);
+            var buildingIcon
+            if (building.colour === "green"){
+                buildingIcon = greenBuilding;
+            }
+            else if (building.colour === "orange"){
+                buildingIcon = orangeBuilding
+            }
+            else
+            {
+                buildingIcon = redBuilding;
+            }
+            const marker = L.marker([building.lat, building.lon], { icon: buildingIcon });
 
             // Store buildingId in marker options for reference
             marker.options.buildingId = building.buildingId;
 
             // 3. Attach click event listener to show the building ID
             marker.on('click', (e) => {
-                onBuildingClick(building.buildingId, building);
+                onBuildingClick(building);
             });
 
             // Add marker to layer group
@@ -147,16 +183,9 @@ async function updateBuildingsInView(){
 
     }
 
-function onBuildingClick(buildingId, buildingData) {
-
-    // Example A: Bind or open a Leaflet popup directly on the map
-    L.popup()
-        .setLatLng([buildingData.lat, buildingData.lon])
-        .setContent(`<b>Building ID:</b> ${buildingId}`)
-        .openOn(map);
-
-    // Example B: If you have a side-panel box (e.g. displayBuildingBox)
-    // displayBuildingBox(buildingId);
+function onBuildingClick(buildingData) {
+    buildingSelected = true
+    displayBuildingBox(buildingData)
 }
 
 async function updateMarkerGroupCounts() {
@@ -251,30 +280,6 @@ function getGroupIconFontSize(message) {
     return '20px';                   // For single digits like 1
 }
 
-function displayWelcomeBox(){
-    buildingInfoBox.style.display = "none"
-    regionInfoBox.style.display = "none"
-
-    if(loggedIn){
-        noItemSelectedInfoBox.children.item(0).innerHTML = "Hello, " + username + "! Welcome back to BTUK Progress Map. <br> Explore our current progress or create and edit your own claims!"
-    }
-    else{
-        noItemSelectedInfoBox.children.item(0).innerHTML = "Welcome to BTUK Progress Map! <br> Have a look around or create an account to link to your in-game progress"
-    }
-    noItemSelectedInfoBox.style.display = "flex"
-}
-
-
-function displayBuildingBox(buildingId){
-    const builder = "Poole"
-    const dateAdded = "07/06/2026"
-    const name = "test Building"
-    noItemSelectedInfoBox.style.display = "none"
-    buildingInfoBox.style.display = "flex"
-    buildingName.value = name
-    buildingBuilder.innerText = "Builder: " + builder
-    buildingCreationDate.innerText = "Created on: " + dateAdded
-}
 
 function loggedInDisplay(username){
     document.getElementById("MCSkinLogo").src = "https://mc-heads.net/avatar/" + username
@@ -301,5 +306,94 @@ function loggedOutDisplay(){
     profileIcon.onclick = null
 }
 
+const serverStatsBox = document.getElementById("ServerStatsBox");
+const closeBuildingBtn = document.getElementById("btnCloseBuilding");
+const closeRegionBtn = document.getElementById("closeRegionBtn");
+const sidebarDivider = document.getElementById("sidebarDivider");
 
+closeBuildingBtn.addEventListener("click", () => {displayWelcomeBox(); buildingSelected = false});
+closeRegionBtn.addEventListener("click", displayWelcomeBox);
+const welcomeMessage = document.getElementById("welcomeMessage")
+const welcomeTitle = document.getElementById("welcomeTitle")
 
+function displayWelcomeBox() {
+    buildingInfoBox.style.display = "none";
+    regionInfoBox.style.display = "none";
+    serverStatsBox.style.display = "flex";
+    noItemSelectedInfoBox.style.display = "flex";
+    sidebarDivider.style.display = "block";
+    if (loggedIn) {
+        welcomeTitle.innerHTML = `Hello, ${username}! Welcome back to BTUK Progress Map.`
+        welcomeMessage.innerHTML = "Explore our current progress or create and edit your own claims! (eventually)"
+    } else {
+        welcomeTitle.innerHTML = `Welcome to BTUK Progress Map!`
+        welcomeMessage.innerHTML = "Have a look around or create an account to link to your in-game progress."
+    }
+}
+
+const buildingId = document.getElementById("buildingId")
+const buildingBuilder = document.getElementById("buildingBuilder")
+const buildingDate = document.getElementById("buildingCreatedDate")
+const buildingIsClaimed = document.getElementById("isClaimed")
+
+function displayBuildingBox(building) {
+    // Hide default views and tabs
+    noItemSelectedInfoBox.style.display = "none";
+    serverStatsBox.style.display = "none";
+    regionInfoBox.style.display = "none";
+    sidebarDivider.style.display = "none";
+
+    buildingInfoBox.style.display = "flex";
+    buildingId.innerText = building.buildingId
+    buildingBuilder.innerText = building.username
+    buildingDate.innerText = formatDate(building.timeAdded)
+    buildingIsClaimed.innerText = building.playerBuilt
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return "Unknown";
+    const date = new Date(dateStr);
+
+    // If the input is not a valid date parseable by JS, return original string
+    if (isNaN(date.getTime())) return dateStr;
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+}
+
+const statBuildings = document.getElementById("statBuildings");
+const statProgress = document.getElementById("statProgress");
+
+async function loadServerStats() {
+    try {
+        const response = await fetch("/building/buildingCountTotal", {
+            method: "POST"
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch server stats");
+
+        const data = await response.json();
+        const total = data.count || 0;
+
+        // Display total formatted with commas (e.g., 12,345)
+        statBuildings.innerText = total.toLocaleString();
+
+        // Calculate percentage complete based on 30,000,000 target
+        const percentage = (total / 30000000) * 100;
+
+        // Show higher precision if percentage is tiny, otherwise 2 decimals
+        if (percentage > 0 && percentage < 0.01) {
+            statProgress.innerText = percentage.toFixed(4) + "%";
+        } else {
+            statProgress.innerText = percentage.toFixed(2) + "%";
+        }
+
+    } catch (err) {
+        console.error("Error loading server statistics:", err);
+        statBuildings.innerText = "--";
+        statProgress.innerText = "--%";
+    }
+}

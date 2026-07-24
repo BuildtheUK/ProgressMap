@@ -67,10 +67,22 @@ select {
 }
 
 .content-container {
+    position: relative; /* Allows map and sidebar to stack on top of each other */
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.form-container{
     display: flex;
     flex-grow: 1;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 
@@ -156,12 +168,17 @@ select {
    ========================================================================== */
 
 .map {
-    flex-grow: 1;
-    flex-shrink: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Sits underneath the floating sidebar */
 }
 
 #map {
     height: 100%;
+    width: 100%;
 }
 
 
@@ -169,70 +186,93 @@ select {
    6. SIDEBAR
    ========================================================================== */
 
+.sidebarTitle {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent-colour-dark);
+    margin-bottom: 5px;
+}
+
+/* Single Floating Pop-out Card */
 .sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000; /* Floats over the Leaflet map */
     display: flex;
-    flex-direction: column;
     flex-grow: 0;
-    flex-shrink: 1;
+    flex-shrink: 0;
+    flex-direction: column;
     justify-content: center;
-    width: 250px;
+    align-items: center;
+    width: 320px;
     height: 100%;
     background-color: var(--base-colour);
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-left: 2px solid var(--input-colour);
+    gap: 12px;
+    /* PC Rounded Corners: Top-Left and Bottom-Left */
+    border-radius: 20px 0 0 20px;
+}
+
+/* Close button for inspecting items */
+.CloseBoxBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--text-dark-colour);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.CloseBoxBtn:hover {
+    color: var(--incorrect-colour);
 }
 
 .SidebarBox {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.sidebarTitle {
-    margin: 0;
-    font-size: medium;
-    font-weight: bold;
-}
-
-/* Sidebar Components */
-.ItemInfoBox {
-    display: none;
-    border-bottom: 2px black solid;
-}
-
-.LayerBox {
-    border-bottom: 2px black solid;
-}
-
-.ListEditBox {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
     align-items: center;
     gap: 10px;
-}
-
-.ListDisplayBox {
     width: 100%;
-    flex-shrink: 1;
-    background-color: var(--input-colour);
-    border: 1px solid gray;
-    text-wrap: wrap;
+    box-sizing: border-box;
+}
+.SidebarDivider, .ProfileDivider{
+    border: none;
+    border-top: 2px solid var(--input-colour);
+    width: 100%;
+    margin: 5px 0;
 }
 
-.StatsBox {
-
-}
-
-.StatsInput {
+.StatCard {
     display: flex;
-    justify-content: flex-start;
-    width: 90%;
-    gap: 5px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 14px;
+    background-color: var(--input-colour);
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
+.StatLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.StatValue {
+    font-size: 1rem;
+    color: var(--accent-colour);
+    text-align: right;
+}
 
 /* ==========================================================================
    7. FORMS & ACCOUNT MANAGEMENT
@@ -372,7 +412,7 @@ div:has(input:focus) > button {
 /* ==========================================================================
    8. PROFILE PAGE
    ========================================================================== */
-.content-container:has(.ProfileView) {
+.form-container:has(.ProfileView) {
     overflow-y: auto;          /* Enables vertical scrolling inside the content area */
     padding: 30px 0;           /* Creates equal spacing at the top and bottom when scrolled */
     box-sizing: border-box; /* Ensures padding is included in height calculations */
@@ -386,7 +426,7 @@ div:has(input:focus) > button {
 
 #ProfilePhoto {
     width: 60%;
-    border-radius: 100%;
+    border-radius: 10%;
 }
 
 .DangerButton{
@@ -405,6 +445,7 @@ div:has(input:focus) > button {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 80%;
 }
 
 /* ==========================================================================
@@ -492,7 +533,68 @@ div:has(input:focus) > button {
 /* ==========================================================================
    8. MEDIA QUERIES (RESPONSIVE DESIGN)
    ========================================================================== */
+@media only screen and (max-width: 800px) {
 
+    .sidebar {
+        flex-direction: row;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        justify-content: space-between;
+        align-items: stretch;
+        height: 200px;
+        padding: 12px 15px;
+        border-left: none;
+        border-top: 2px solid var(--input-colour);
+    }
+
+    .SidebarDivider {
+        display: none !important;
+    }
+
+    .sidebarTitle {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    #welcomeMessage {
+        font-size: 0.95rem;
+        line-height: 1.25;
+    }
+
+    /* Side-by-side layout on mobile */
+    #NoItemSelected, #ServerStatsBox {
+        flex: 1;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    #NoItemSelected {
+        border-right: 1px solid var(--input-colour);
+        padding-right: 10px;
+    }
+
+    #ServerStatsBox {
+        padding-left: 10px;
+    }
+
+    /* Full width when inspecting single items */
+    #BuildingInfoBox, #RegionInfoBox {
+        width: 100%;
+        height: 100%;
+    }
+
+    .StatCard {
+        padding: 6px 10px;
+    }
+
+    .StatLabel, .StatValue {
+        font-size: 0.75rem;
+    }
+}
 @media only screen and (max-width: 450px) {
     .Nav-Bar {
         height: 100px;
@@ -503,28 +605,12 @@ div:has(input:focus) > button {
         flex-direction: column;
     }
 
-    .content-container:has(.ProfileView) {
+    .form-container:has(.ProfileView) {
         padding: 0;
     }
 
     .map {
         width: 100%;
-    }
-
-    .sidebar {
-        flex-direction: row;
-        width: 100%;
-        height: 250px;
-    }
-
-    .ItemInfoBox {
-        border-right: 2px black solid;
-        border-bottom: none;
-    }
-
-    .LayerBox {
-        border-right: 2px black solid;
-        border-bottom: none;
     }
 
     .AccountForm {

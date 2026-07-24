@@ -4,20 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="added change password logic">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/BuildingController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/Building.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingGridItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingGridRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/MapBounds.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/BlueCircle.png" afterDir="false" />
+    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="added some building logic. still need to add custom icons and ability to see building data (including username)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingGridRespItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/greenBuilding.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/orangeBuilding.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/redBuilding.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/Security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/BuildingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/BuildingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingGridItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/entities/BuildingGridItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/ProxyAPIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/services/ProxyAPIService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/example-application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example-application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/ChangePassword.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ChangePassword.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/ForgotPassword.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ForgotPassword.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/Profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/Profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/homePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/homePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/signUp.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/signUp.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,8 +39,8 @@
         <option value="package-info" />
         <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="Record" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -162,7 +169,7 @@
       <workItem from="1784065446830" duration="11327000" />
       <workItem from="1784305674962" duration="3738000" />
       <workItem from="1784498745787" duration="13007000" />
-      <workItem from="1784738487382" duration="13937000" />
+      <workItem from="1784738487382" duration="35723000" />
     </task>
     <task id="LOCAL-00001" summary="Login system working with local database. probably still has a lot of work to do">
       <option name="closed" value="true" />
@@ -236,7 +243,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784587127496</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added some building logic. still need to add custom icons and ability to see building data (including username)">
+      <option name="closed" value="true" />
+      <created>1784762776569</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1784762776569</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,6 +267,7 @@
     <MESSAGE value="Added remaining endpoints for user management logic. updated delete to require a password (Frontend still TODO)" />
     <MESSAGE value="modified js layout a bit for better code reuse. added js for forgetting password." />
     <MESSAGE value="added change password logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="added change password logic" />
+    <MESSAGE value="added some building logic. still need to add custom icons and ability to see building data (including username)" />
+    <option name="LAST_COMMIT_MESSAGE" value="added some building logic. still need to add custom icons and ability to see building data (including username)" />
   </component>
 </project>
