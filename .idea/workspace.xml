@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="changed many things (AI help but yk reviewed thouroughly by me) I think this is a working V1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/maphub/BuildingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/maphub/BuildingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/example-application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/example-application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="package-info" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="Class" />
+        <option value="Record" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AMgr8&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BTEUK/ProgressMap.git&quot;,
+    &quot;accountId&quot;: &quot;0e9473e5-3f28-4e0b-a969-573ae1b0402d&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="3CMkTq16Ma7Sl9MMwqNcJ5f7UXi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Maven.MapHub [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.maphub [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.maphub [package].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DemoApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;application.passwordSafe&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.maphub.entities" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Alex\Documents\MapHub\src\main\resources\static\images" />
+      <recent name="C:\Users\Alex\Documents\MapHub\src\main\resources\static" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="demo" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.maphub.DemoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="demo" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.maphub.DemoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="93b47ab4-82df-46e7-8456-529574c3738e" name="Changes" comment="" />
+      <created>1776202837374</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1776202837374</updated>
+      <workItem from="1776202839021" duration="22180000" />
+      <workItem from="1776415799018" duration="7214000" />
+      <workItem from="1776678555964" duration="4000" />
+      <workItem from="1777320293839" duration="13367000" />
+      <workItem from="1777367061788" duration="23000" />
+      <workItem from="1777367917527" duration="15153000" />
+      <workItem from="1779224537292" duration="7474000" />
+      <workItem from="1780954133756" duration="6000" />
+      <workItem from="1780955595538" duration="6618000" />
+      <workItem from="1781023268544" duration="7318000" />
+      <workItem from="1781194343707" duration="1931000" />
+      <workItem from="1782063777125" duration="3577000" />
+      <workItem from="1783701182539" duration="46196000" />
+      <workItem from="1783980244052" duration="3985000" />
+      <workItem from="1784065446830" duration="11327000" />
+      <workItem from="1784305674962" duration="3738000" />
+      <workItem from="1784498745787" duration="13007000" />
+      <workItem from="1784738487382" duration="35961000" />
+    </task>
+    <task id="LOCAL-00001" summary="Login system working with local database. probably still has a lot of work to do">
+      <option name="closed" value="true" />
+      <created>1776295590706</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776295590706</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Login system actually working with local database.">
+      <option name="closed" value="true" />
+      <created>1777334033219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1777334033219</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Show password, ability to click on and off markers to show and hide information">
+      <option name="closed" value="true" />
+      <created>1780966576401</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1780966576401</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Login changed to talk to proxy and log in with real mc account references">
+      <option name="closed" value="true" />
+      <created>1783780912190</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1783780912190</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added docker config files should build with docker compose now. a .env file will need to be added for db setup. Also added a way to get to the profile page">
+      <option name="closed" value="true" />
+      <created>1783872296490</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1783872296490</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added profile page and ability to delete account">
+      <option name="closed" value="true" />
+      <created>1784067505873</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1784067505873</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added remaining endpoints for user management logic. updated delete to require a password (Frontend still TODO)">
+      <option name="closed" value="true" />
+      <created>1784240386785</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1784240386785</updated>
+    </task>
+    <task id="LOCAL-00008" summary="modified js layout a bit for better code reuse. added js for forgetting password.">
+      <option name="closed" value="true" />
+      <created>1784584865992</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1784584865992</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added change password logic">
+      <option name="closed" value="true" />
+      <created>1784587127496</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1784587127496</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added some building logic. still need to add custom icons and ability to see building data (including username)">
+      <option name="closed" value="true" />
+      <created>1784762776569</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1784762776569</updated>
+    </task>
+    <task id="LOCAL-00011" summary="changed many things (AI help but yk reviewed thouroughly by me) I think this is a working V1">
+      <option name="closed" value="true" />
+      <created>1784926928614</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1784926928614</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Login system working with local database. probably still has a lot of work to do" />
+    <MESSAGE value="Login system actually working with local database." />
+    <MESSAGE value="Show password, ability to click on and off markers to show and hide information" />
+    <MESSAGE value="Login changed to talk to proxy and log in with real mc account references" />
+    <MESSAGE value="Added docker config files should build with docker compose now. a .env file will need to be added for db setup. Also added a way to get to the profile page" />
+    <MESSAGE value="Added profile page and ability to delete account" />
+    <MESSAGE value="Added remaining endpoints for user management logic. updated delete to require a password (Frontend still TODO)" />
+    <MESSAGE value="modified js layout a bit for better code reuse. added js for forgetting password." />
+    <MESSAGE value="added change password logic" />
+    <MESSAGE value="added some building logic. still need to add custom icons and ability to see building data (including username)" />
+    <MESSAGE value="changed many things (AI help but yk reviewed thouroughly by me) I think this is a working V1" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed many things (AI help but yk reviewed thouroughly by me) I think this is a working V1" />
+  </component>
+</project>

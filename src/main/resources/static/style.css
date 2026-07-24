@@ -1,0 +1,629 @@
+/* ==========================================================================
+   1. IMPORTS & CUSTOM PROPERTIES (VARIABLES)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --accent-colour: #00247e;
+    --accent-colour-dark: #00104A;
+    --accent-colour-2: white;
+    --base-colour: #f2f2f0;
+    --input-colour: #dbdbdb;
+    --text-dark-colour: black;
+    --text-light-colour: white;
+    --incorrect-colour: red;
+    --incorrect-colour-focussed: #910101;
+}
+
+
+/* ==========================================================================
+   2. GLOBAL / BASE STYLES
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: Raleway, sans-serif;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+select {
+    width: 90%;
+}
+
+
+/* ==========================================================================
+   3. LAYOUT & CONTAINERS
+   ========================================================================== */
+
+.Page-Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.BackgroundPage {
+    background-image: url(images/big-ben.png);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.content-container {
+    position: relative; /* Allows map and sidebar to stack on top of each other */
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.form-container{
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   4. NAVIGATION BAR
+   ========================================================================== */
+
+.Nav-Bar {
+    display: flex;
+    flex-grow: 0;
+    justify-content: flex-start;
+    align-items: center;
+    height: 75px;
+    background-color: var(--accent-colour);
+}
+
+.Nav-Bar h1 {
+    color: var(--text-light-colour);
+}
+
+/* Logo & Server IP */
+.LogoBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-left: 10px;
+}
+
+.logo {
+
+}
+
+#BTUKLogo {
+    width: 80%;
+    height: 80%;
+}
+
+.NameBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+}
+
+#serverIpNavBar {
+    align-self: flex-start;
+    color: var(--text-light-colour);
+    text-decoration: none;
+}
+
+/* Profile / Login Box */
+.ProfileBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 75px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: 10px;
+    gap: 5px;
+}
+
+#MCSkinLogo {
+    width: 60%;
+    border-radius: 100%;
+}
+
+.loginButton {
+    color: var(--text-dark-colour);
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    text-decoration-color: black;
+}
+
+
+/* ==========================================================================
+   5. MAIN MAP
+   ========================================================================== */
+
+.map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Sits underneath the floating sidebar */
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   6. SIDEBAR
+   ========================================================================== */
+
+.sidebarTitle {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent-colour-dark);
+    margin-bottom: 5px;
+}
+
+/* Single Floating Pop-out Card */
+.sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000; /* Floats over the Leaflet map */
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    height: 100%;
+    background-color: var(--base-colour);
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-left: 2px solid var(--input-colour);
+    gap: 12px;
+    /* PC Rounded Corners: Top-Left and Bottom-Left */
+    border-radius: 20px 0 0 20px;
+}
+
+/* Close button for inspecting items */
+.CloseBoxBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--text-dark-colour);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.CloseBoxBtn:hover {
+    color: var(--incorrect-colour);
+}
+
+.SidebarBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.SidebarDivider, .ProfileDivider{
+    border: none;
+    border-top: 2px solid var(--input-colour);
+    width: 100%;
+    margin: 5px 0;
+}
+
+.StatCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 14px;
+    background-color: var(--input-colour);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.StatLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.StatValue {
+    font-size: 1rem;
+    color: var(--accent-colour);
+    text-align: right;
+}
+
+/* ==========================================================================
+   7. FORMS & ACCOUNT MANAGEMENT
+   ========================================================================== */
+
+.AccountForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: var(--base-colour);
+}
+
+.AccountForm h2 {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+/* Generic Form Layout */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.FormInput {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Labels & Icons */
+.FormInput label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px 0 0 10px;
+    background-color: var(--accent-colour);
+}
+
+.FormInput label svg {
+    fill: var(--accent-colour-2);
+}
+
+/* Input Fields */
+.FormInput input {
+    box-sizing: border-box;
+    flex-grow: 1;
+    height: 50px;
+    padding: 1em;
+    border: 2px solid var(--input-colour);
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    background-color: var(--input-colour);
+    transition: 150ms ease;
+}
+
+.FormInput input.passwordBox {
+    border-right: none;
+    border-radius: 0;
+}
+
+.FormInput input:hover {
+    border-color: var(--accent-colour);
+}
+
+.FormInput input:focus {
+    outline: none;
+    border-color: var(--text-dark-colour);
+}
+
+div:has(input:focus) > label,
+div:has(input:focus) > button {
+    background-color: var(--text-dark-colour);
+}
+
+
+
+/* Form Buttons */
+.button {
+    margin-top: 10px;
+    padding: 0.85em 4em;
+    border: none;
+    border-radius: 1000px;
+    background-color: var(--accent-colour);
+    color: var(--text-light-colour);
+    font: inherit;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--accent-colour-dark);
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:focus-visible {
+    outline: none;
+    background-color: var(--text-dark-colour);
+}
+
+.button:active {
+    background-color: var(--text-dark-colour);
+    color: var(--text-dark-colour);
+}
+
+.showPassword {
+    margin-top: 0;
+    padding: 0 0.5em;
+    border-radius: 0 10px 10px 0;
+}
+
+/* Error States */
+.incorrect button,
+.incorrect label {
+    background-color: var(--incorrect-colour) !important;
+}
+
+.incorrect input {
+    border-color: var(--incorrect-colour) !important;
+}
+
+#errorMessage {
+    color: var(--incorrect-colour);
+}
+/* ==========================================================================
+   8. PROFILE PAGE
+   ========================================================================== */
+.form-container:has(.ProfileView) {
+    overflow-y: auto;          /* Enables vertical scrolling inside the content area */
+    padding: 30px 0;           /* Creates equal spacing at the top and bottom when scrolled */
+    box-sizing: border-box; /* Ensures padding is included in height calculations */
+}
+
+/* Ensure the profile card centers nicely when short and scrolls cleanly when tall */
+.ProfileView {
+    margin: auto;              /* Keeps the card centered and respects container padding */
+}
+
+
+#ProfilePhoto {
+    width: 60%;
+    border-radius: 10%;
+}
+
+.DangerButton{
+    background-color: var(--incorrect-colour);
+}
+
+.DangerButton:hover{
+    background-color: var(--incorrect-colour-focussed);
+}
+
+.DangerButton:active {
+    background-color: var(--text-dark-colour);
+}
+#ProfileStatsBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+}
+
+/* ==========================================================================
+   POPUP
+   ========================================================================== */
+
+.Popup{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+
+}
+
+.Popup.open{
+    display: flex;
+
+}
+
+.PopupInner{
+    background-color: var(--base-colour);
+    border-radius: 5px;
+    box-shadow: 0 1px 4px var(--text-dark-colour);
+    padding: 15px 25px;
+    max-width: 90%;          /* Prevents popup from overflowing small screens */
+    width: max-content;      /* Fits closely around the content */
+    box-sizing: border-box;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#buttonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;         /* Allows buttons to stack vertically when space is tight */
+    gap: 10px;               /* Creates a clean gap between the buttons */
+    width: 100%;
+}
+
+#passwordToDelete{
+    max-width: 350px;
+    width: 90%
+}
+
+/* ==========================================================================
+   Map
+   ========================================================================== */
+.my-labels {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--text-light-colour);
+    font-weight: bold;
+    font-family: sans-serif;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none;
+}
+
+.my-labels::before {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   8. MEDIA QUERIES (RESPONSIVE DESIGN)
+   ========================================================================== */
+@media only screen and (max-width: 800px) {
+
+    .sidebar {
+        flex-direction: row;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        justify-content: space-between;
+        align-items: stretch;
+        height: 200px;
+        padding: 12px 15px;
+        border-left: none;
+        border-top: 2px solid var(--input-colour);
+    }
+
+    .SidebarDivider {
+        display: none !important;
+    }
+
+    .sidebarTitle {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    #welcomeMessage {
+        font-size: 0.95rem;
+        line-height: 1.25;
+    }
+
+    /* Side-by-side layout on mobile */
+    #NoItemSelected, #ServerStatsBox {
+        flex: 1;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    #NoItemSelected {
+        border-right: 1px solid var(--input-colour);
+        padding-right: 10px;
+    }
+
+    #ServerStatsBox {
+        padding-left: 10px;
+    }
+
+    /* Full width when inspecting single items */
+    #BuildingInfoBox, #RegionInfoBox {
+        width: 100%;
+        height: 100%;
+    }
+
+    .StatCard {
+        padding: 6px 10px;
+    }
+
+    .StatLabel, .StatValue {
+        font-size: 0.75rem;
+    }
+}
+@media only screen and (max-width: 450px) {
+    .Nav-Bar {
+        height: 100px;
+        text-align: left;
+    }
+
+    .content-container {
+        flex-direction: column;
+    }
+
+    .form-container:has(.ProfileView) {
+        padding: 0;
+    }
+
+    .map {
+        width: 100%;
+    }
+
+    .AccountForm {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        overflow-y: auto;
+    }
+    .ProfileView{
+        justify-content: flex-start; /* Prevents flex centering from clipping top elements */
+        padding-top: 25px;           /* Ensures H1 starts with clear spacing at the top */
+        padding-bottom: 25px;
+    }
+
+}

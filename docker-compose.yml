@@ -1,0 +1,32 @@
+
+services:
+  # --- PostgreSQL Database Container ---
+  db:
+    image: postgres:16-alpine
+    container_name: maphub-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432" # Maps container port 5432 to host port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persists database data on your disk
+
+  # --- Java Spring Boot App Container ---
+  app:
+    build: .
+    container_name: maphub-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+
+volumes:
+  postgres_data: # Named volume to ensure data isn't lost when containers stop
