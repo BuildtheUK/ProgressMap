@@ -159,7 +159,7 @@ public class BuildingController {
         }
         String uuid = principal.getName();
         // Fetch buildings filtered specifically by the authenticated player's UUID
-        int count = proxyAPIService.getBuildingCount(List.of(uuid), null, null, null, null, null, null);
+        int count = proxyAPIService.getBuildingCount(List.of(uuid), null, null, null, null, null, true);
         return ResponseEntity.ok(Map.of("count", count));
     }
 }
