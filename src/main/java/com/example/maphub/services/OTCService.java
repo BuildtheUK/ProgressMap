@@ -1,19 +1,12 @@
 package com.example.maphub.services;
 
-import com.example.maphub.PasswordUtil;
-import com.example.maphub.entities.OneTimeCode;
-import com.example.maphub.entities.User;
-import com.example.maphub.entities.VerificationResult;
+import com.example.maphub.entities.otc.OneTimeCode;
 import com.example.maphub.repositories.OneTimeCodeRepository;
-import com.example.maphub.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
-import java.util.Random;
 
 @Service
 @Transactional

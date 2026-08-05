@@ -2,8 +2,8 @@ package com.example.maphub.services;
 
 
 
-import com.example.maphub.entities.BuildingDTO;
-import com.example.maphub.entities.BuildingGridItem;
+import com.example.maphub.entities.buildings.BuildingDTO;
+import com.example.maphub.entities.buildings.BuildingGridItem;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
