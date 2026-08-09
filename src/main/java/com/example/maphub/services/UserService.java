@@ -2,7 +2,6 @@ package com.example.maphub.services;
 
 import com.example.maphub.PasswordUtil;
 import com.example.maphub.entities.User;
-import com.example.maphub.entities.VerificationResult;
 import com.example.maphub.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.example.maphub;
+package com.example.maphub.controllers;
 import com.example.maphub.entities.DeleteAccountRequest;
 import com.example.maphub.entities.PasswordChangeObject;
 import com.example.maphub.services.PasswordValidationService;

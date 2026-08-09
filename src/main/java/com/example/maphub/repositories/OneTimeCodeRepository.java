@@ -1,6 +1,6 @@
 package com.example.maphub.repositories;
 
-import com.example.maphub.entities.OneTimeCode;
+import com.example.maphub.entities.otc.OneTimeCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

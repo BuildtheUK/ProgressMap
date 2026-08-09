@@ -14,9 +14,11 @@ var loggedIn = false;
 var username = ""
 var buildingSelected = false;
 
-
+const redHeatmapColours = ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#a50f15','#67000d']
+var heatmapColours = redHeatmapColours
 const gridMarkerGroup = L.layerGroup().addTo(map);
 const buildingMarkerGroup = L.layerGroup().addTo(map);
+const heatMapGroup = L.layerGroup().addTo(map);
 var buildings = []
 
 const stepIcon = L.icon({
@@ -105,47 +107,105 @@ map.on("moveend", () => {
 
 map.on("click",() => {if (buildingSelected){displayWelcomeBox(); buildingSelected = false}})
 
-function updateLayers(){
-    if (map.getZoom() >= 17){
-        gridMarkerGroup.clearLayers()
-        updateBuildingsInView()
-    }else
-    {
-        buildingMarkerGroup.clearLayers()
-        updateMarkerGroupCounts();
+async function updateLayers() {
+    if (map.getZoom() >= 17) {
+        gridMarkerGroup.clearLayers();
+        heatMapGroup.clearLayers();
+        const dto = await getCloseUp();
+        if (dto && dto.buildings) {
+            updateBuildingsInView(dto.buildings);
+        }
+    } else {
+        buildingMarkerGroup.clearLayers();
+        const dto = await getOverview();
+        if (dto) {
+            if (dto.buildings) {
+                updateMarkerGroupCounts(dto.buildings);
+            }
+            if (dto.heatmap) {
+                updateHeatmapView(dto.heatmap);
+            }
+        }
     }
 }
-
-
-
-async function updateBuildingsInView(){
+async function getOverview() {
     const bounds = map.getBounds();
-
-    const minLat = bounds.getSouth();
-    const maxLat = bounds.getNorth();
-    const minLon = bounds.getWest();
-    const maxLon = bounds.getEast();
+    const zoom = map.getZoom();
+    const { latStep, lonStep } = getGridStepSizes(zoom, map.getCenter().lat);
 
     const requestData = {
-        minLat: minLat,
-        minLon: minLon,
-        maxLat: maxLat,
-        maxLon: maxLon,
+        minLat: bounds.getSouth(),
+        minLon: bounds.getWest(),
+        maxLat: bounds.getNorth(),
+        maxLon: bounds.getEast(),
+        stepLat: latStep,
+        stepLon: lonStep
     };
+
     try {
-        const response = await fetch("/building/allBuildings", {
+        const response = await fetch("/map/overview", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestData)
         });
 
-        if (!response.ok) throw new Error("Failed to fetch grid counts");
+        if (!response.ok) throw new Error("Failed to fetch overview data");
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching overview:", error);
+        return null;
+    }
+}
 
-        const data = await response.json();
+async function getCloseUp() {
+    const bounds = map.getBounds();
 
-        buildings = data;
+    const requestData = {
+        minLat: bounds.getSouth(),
+        minLon: bounds.getWest(),
+        maxLat: bounds.getNorth(),
+        maxLon: bounds.getEast()
+    };
+
+    try {
+        const response = await fetch("/map/closeUp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch close-up data");
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching closeUp:", error);
+        return null;
+    }
+}
+
+function updateHeatmapView(heatmapItems) {
+    heatMapGroup.clearLayers();
+
+    heatmapItems.forEach(item => {
+        // Construct bounding rectangle coordinates: [[south, west], [north, east]]
+        const bounds = [
+            [item.minLat, item.minLon],
+            [item.maxLat, item.maxLon]
+        ];
+
+        const color = heatmapColours[item.magnitude];
+
+        const rectangle = L.rectangle(bounds, {
+            color: color,
+            weight: 0,          // No border
+            fillColor: color,
+            fillOpacity: 0.7    // Semi-transparent overlay
+        });
+
+        heatMapGroup.addLayer(rectangle);
+    });
+}
+
+function updateBuildingsInView(buildings){
         buildingMarkerGroup.clearLayers();
 
         buildings.forEach(building => {
@@ -174,13 +234,6 @@ async function updateBuildingsInView(){
             // Add marker to layer group
             buildingMarkerGroup.addLayer(marker);
         });
-
-
-    } catch (error) {
-        console.error("Error fetching buildings", error);
-    }
-
-
     }
 
 function onBuildingClick(buildingData) {
@@ -188,56 +241,16 @@ function onBuildingClick(buildingData) {
     displayBuildingBox(buildingData)
 }
 
-async function updateMarkerGroupCounts() {
-    const bounds = map.getBounds();
-    const zoom = map.getZoom();
+function updateMarkerGroupCounts(buildingGridItems) {
+    gridMarkerGroup.clearLayers();
 
-    const minLat = bounds.getSouth();
-    const maxLat = bounds.getNorth();
-    const minLon = bounds.getWest();
-    const maxLon = bounds.getEast();
-
-    // Calculate fixed world grid steps based on current zoom level
-    const { latStep, lonStep } = getGridStepSizes(zoom, map.getCenter().lat);
-
-    const requestData = {
-        minLat: minLat,
-        minLon: minLon,
-        maxLat: maxLat,
-        maxLon: maxLon,
-        stepLat: latStep,
-        stepLon: lonStep
-    };
-
-    try {
-        const response = await fetch("/building/gridCount", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(requestData)
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch grid counts");
-
-        const data = await response.json();
-
-        // 1. Clear previous markers from the map
-        gridMarkerGroup.clearLayers();
-
-        // 2. Render new markers
-        data.forEach(item => {
-            if (item.count > 0) {
-                const markerMessage = getGroupIconMessage(item.count);
-                const marker = L.marker([item.lat, item.lon], { icon: stepIcon });
-
-                addGroupMarkerToMap(marker, markerMessage);
-            }
-        });
-
-    } catch (error) {
-        console.error("Error loading grid counts:", error);
-    }
+    buildingGridItems.forEach(item => {
+        if (item.count > 0) {
+            const markerMessage = getGroupIconMessage(item.count);
+            const marker = L.marker([item.lat, item.lon], { icon: stepIcon });
+            addGroupMarkerToMap(marker, markerMessage);
+        }
+    });
 }
 
 function getGridStepSizes(zoom, centerLat) {
@@ -369,8 +382,8 @@ const statProgress = document.getElementById("statProgress");
 
 async function loadServerStats() {
     try {
-        const response = await fetch("/building/buildingCountTotal", {
-            method: "POST"
+        const response = await fetch("/building/total", {
+            method: "GET"
         });
 
         if (!response.ok) throw new Error("Failed to fetch server stats");

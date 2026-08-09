@@ -1,4 +1,4 @@
-package com.example.maphub.entities;
+package com.example.maphub.entities.buildings;
 
 public record BuildingGridRequest (
     double minLat,
