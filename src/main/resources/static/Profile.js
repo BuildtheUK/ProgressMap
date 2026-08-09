@@ -82,8 +82,8 @@ window.addEventListener("load", () => {
             window.location.assign("login.html");
         });
 
-    fetch("/building/buildingPersonalCount", {
-        method: "POST",
+    fetch("/building/playerCount", {
+        method: "GET",
         credentials: "include"
     })
         .then(res => {

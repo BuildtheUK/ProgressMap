@@ -192,7 +192,7 @@ function updateHeatmapView(heatmapItems) {
             [item.maxLat, item.maxLon]
         ];
 
-        const color = getColour(item.magnitude);
+        const color = heatmapColours[item.magnitude];
 
         const rectangle = L.rectangle(bounds, {
             color: color,
@@ -203,12 +203,6 @@ function updateHeatmapView(heatmapItems) {
 
         heatMapGroup.addLayer(rectangle);
     });
-}
-
-function getColour(magnitude) {
-    // Map non-negative integer magnitudes to color ramp indices (0 to 8)
-    const index = Math.min(Math.max(0, magnitude), redHeatmapColours.length - 1);
-    return redHeatmapColours[index];
 }
 
 function updateBuildingsInView(buildings){
@@ -389,7 +383,7 @@ const statProgress = document.getElementById("statProgress");
 async function loadServerStats() {
     try {
         const response = await fetch("/building/total", {
-            method: "POST"
+            method: "GET"
         });
 
         if (!response.ok) throw new Error("Failed to fetch server stats");

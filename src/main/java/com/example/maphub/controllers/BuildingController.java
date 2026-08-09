@@ -21,19 +21,19 @@ public class BuildingController {
         this.proxyAPIService = proxyAPIService;
     }
     @GetMapping("/total")
-    public int getTotalBuildings() {
+    public ResponseEntity<?> getTotalBuildings() {
         int count = proxyAPIService.getBuildingCount(null,null,null,null,null,null,null);
-        return  count;
+        return ResponseEntity.ok(Map.of("count", count));
     }
     @GetMapping("/playerCount")
-    public int getPlayerCount(Principal principal) {
+    public ResponseEntity<?> getPlayerCount(Principal principal) {
         if (principal == null) {
-            return 0;
+            return ResponseEntity.status(401).body("Not logged in");
         }
         String uuid = principal.getName();
         // Fetch buildings filtered specifically by the authenticated player's UUID
         int count = proxyAPIService.getBuildingCount(List.of(uuid), null, null, null, null, null, true);
-        return count;
+        return ResponseEntity.ok(Map.of("count", count));
     }
 
 }

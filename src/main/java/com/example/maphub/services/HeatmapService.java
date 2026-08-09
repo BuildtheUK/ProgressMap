@@ -10,23 +10,48 @@ import java.util.List;
 @Service
 public class HeatmapService {
 
-    public List<HeatmapRespItem> getHeatmap(List<BuildingGridItem> buildings){
+    // Maximum density at high zoom:
+    // 10 buildings / 10,000 m²
+    private static final double MAX_DENSITY = 10.0 / 10_000.0;
+
+    // At large scales, 20% of all buildings = maximum
+    private static final double MAX_BUILDING_SHARE = 0.20;
+
+    // Controls where the transition from density -> total progress occurs.
+    // 5 km² is a reasonable starting point.
+    private static final double TRANSITION_AREA = 20_000_000.0;
+
+    public List<HeatmapRespItem> getHeatmap(List<BuildingGridItem> buildings, int totalBuildings) {
         List<HeatmapRespItem> out = new ArrayList<>();
-        if (buildings.isEmpty())
-        {
-            return  out;
+
+        if (buildings.isEmpty() || totalBuildings <= 0) {
+            return out;
         }
-        double area = calculateAreaWithLatLon(buildings.getFirst());
-        for (BuildingGridItem b : buildings){
+        for (BuildingGridItem b : buildings) {
+            double area = calculateAreaWithLatLon(b);
+            if (area <= 0) {
+                continue;
+            }
+            double buildingCount = b.count;
+            double density = buildingCount / area;
+            double densityWeight = Math.exp(-area / TRANSITION_AREA);
+            double densityScore = density / MAX_DENSITY;
+            double buildingShare = buildingCount / (double) totalBuildings;
+            double progressScore = buildingShare / MAX_BUILDING_SHARE;
+            double score = densityWeight * densityScore + (1.0 - densityWeight) * progressScore;
+
+            //score between 0 and 1
+            score = Math.min(score, 1.0);
+            int magnitude = (int) (Math.sqrt(score) * 8.99);
             HeatmapRespItem h = new HeatmapRespItem();
             h.maxLat = b.maxLat;
             h.maxLon = b.maxLon;
             h.minLat = b.minLat;
             h.minLon = b.minLon;
-            //density of buildings /100m^2
-            h.magnitude = (int) Math.round(((double) b.count * 10000.0) / area);
+            h.magnitude = magnitude;
             out.add(h);
         }
+
         return out;
     }
     public double calculateAreaWithLatLon(BuildingGridItem b) {

@@ -23,9 +23,11 @@ public class MapController {
 
     private final BuildingService buildingService;
     private final HeatmapService heatmapService;
-    public MapController(BuildingService buildingService, HeatmapService heatmapService){
+    private final ProxyAPIService proxyAPIService;
+    public MapController(BuildingService buildingService, HeatmapService heatmapService, ProxyAPIService proxyAPIService){
         this.buildingService = buildingService;
         this.heatmapService = heatmapService;
+        this.proxyAPIService = proxyAPIService;
     }
 
     @PostMapping("/overview")
@@ -33,7 +35,7 @@ public class MapController {
         List<BuildingGridItem> buildings = buildingService.getGridCount(req,principal);
         OverviewResponse resp = new OverviewResponse();
         resp.buildings = buildingService.getGroupedGridCounts(buildings);
-        resp.heatmap = heatmapService.getHeatmap(buildings);
+        resp.heatmap = heatmapService.getHeatmap(buildings, proxyAPIService.getBuildingCount(null,null,null,null,null,null,null));
         return ResponseEntity.ok(resp);
     }
     @PostMapping("/closeUp")
