@@ -2,13 +2,16 @@ package com.example.maphub.services;
 
 import com.example.maphub.entities.*;
 import com.example.maphub.entities.buildings.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.TemporalAmount;
 import java.util.*;
 
 @Service
@@ -139,6 +142,20 @@ public class BuildingService {
     }
 
     private record xy (int x, int y){}
+
+    public int getTotalCount() {
+        int count = proxyAPIService.getBuildingCount(null,null,null,null,null,null,null,null,null);
+        return count;
+    }
+    public int getPlayerCount(String uuid) {
+        int count = proxyAPIService.getBuildingCount(List.of(uuid),null,null,null,null,null,null,null,null);
+        return count;
+    }
+
+    public int getRecentBuildingCount(){
+        int count = proxyAPIService.getBuildingCount(null,null,null,null,null,null,null, LocalDateTime.now().minusMonths(1), LocalDateTime.now());
+        return count;
+    }
 
 
 

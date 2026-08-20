@@ -1,4 +1,5 @@
 import {initiatePasswordBoxButtons} from "./PasswordUtils.js";
+import {addStat} from "./StatsUtils.js";
 
 const btnDelete = document.getElementById("btnDeleteAccount")
 const btnConfirmDelete = document.getElementById("btnConfirmDeleteAccount")
@@ -82,7 +83,7 @@ window.addEventListener("load", () => {
             window.location.assign("login.html");
         });
 
-    fetch("/building/playerCount", {
+    fetch("/stats/profile", {
         method: "GET",
         credentials: "include"
     })
@@ -91,8 +92,8 @@ window.addEventListener("load", () => {
             return res.json();
         })
         .then(data => {
-            if (data && data.count !== undefined) {
-                buildingCount.innerText = data.count;
+            if (data) {
+                updateStatsBox(data)
             }
         })
         .catch(err => {
@@ -100,3 +101,14 @@ window.addEventListener("load", () => {
             buildingCount.innerText = "0";
         });
 });
+
+function updateStatsBox(data){
+    let statsBoxName = "ProfileStatsBox"
+        addStat(statsBoxName,"Buildings",data.buildings.toString())
+        addStat(statsBoxName, "Tplls", data.tplls.toString())
+    addStat(statsBoxName,"Time Non-AFK", data.timeNonAFK.toFixed(2) + " days")
+    addStat(statsBoxName,"Productivity grade", data.productivity)
+    if (data.reviewsCompleted > 0){
+        addStat(statsBoxName, "Reviews", data.reviewsCompleted.toString())
+    }
+}

@@ -1,4 +1,7 @@
-const map = L.map('map').setView([51.505, -0.09], 10);
+import {addStat} from "./StatsUtils.js";
+
+//set map centre to cover whole UK
+const map = L.map('map').setView([54.06801502799949, -3.8921490108560857], 5);
 
 const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -347,7 +350,6 @@ function displayWelcomeBox() {
 const buildingId = document.getElementById("buildingId")
 const buildingBuilder = document.getElementById("buildingBuilder")
 const buildingDate = document.getElementById("buildingCreatedDate")
-const buildingIsClaimed = document.getElementById("isClaimed")
 
 function displayBuildingBox(building) {
     // Hide default views and tabs
@@ -360,53 +362,66 @@ function displayBuildingBox(building) {
     buildingId.innerText = building.buildingId
     buildingBuilder.innerText = building.username
     buildingDate.innerText = formatDate(building.timeAdded)
-    buildingIsClaimed.innerText = building.playerBuilt
 }
 
 function formatDate(dateStr) {
     if (!dateStr) return "Unknown";
+
+    // Handle dates beyond JavaScript Date's representable range
+    const yearMatch = dateStr.match(/^\+?(\d+)-/);
+
+    if (yearMatch) {
+        const year = Number(yearMatch[1]);
+
+        if (year > 999999){
+            return `~${((year - 2026) / 1_000_000).toFixed(1)} million years`;
+        }
+        if (year > 9999) {
+            return `~${((year - 2026) / 1_000).toFixed(1)} thousand years`;
+        }
+    }
+
     const date = new Date(dateStr);
 
-    // If the input is not a valid date parseable by JS, return original string
     if (isNaN(date.getTime())) return dateStr;
+    console.log("date is valid")
+
+    const cutoffDate = new Date("2026-03-15T00:00:00");
+    if (date < cutoffDate) return "Unknown";
+
+    const year = date.getFullYear();
 
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
 
     return `${day}-${month}-${year}`;
 }
 
-const statBuildings = document.getElementById("statBuildings");
-const statProgress = document.getElementById("statProgress");
-
 async function loadServerStats() {
     try {
-        const response = await fetch("/building/total", {
-            method: "GET"
+        const response = await fetch("/stats/homePage", {
+            method: "GET",
+            credentials: "include"
         });
 
         if (!response.ok) throw new Error("Failed to fetch server stats");
-
         const data = await response.json();
-        const total = data.count || 0;
+        if (data){
+            let statBoxName = "ServerStatsBox"
+            addStat(statBoxName,"Buildings",data.buildings.toString())
+            let percentageText = ""
+            if (data.percentage > 0 && data.percentage < 0.01) {
+                percentageText = data.percentage.toFixed(4) + "%";
+            } else {
+                percentageText = data.percentage.toFixed(2) + "%";
+            }
+            addStat(statBoxName,"Buildings last month",data.buildingsRecent)
+            addStat(statBoxName,"Percentage Complete",percentageText)
+            addStat(statBoxName,"Estimated Completion", formatDate(data.estimatedFinishDate))
 
-        // Display total formatted with commas (e.g., 12,345)
-        statBuildings.innerText = total.toLocaleString();
-
-        // Calculate percentage complete based on 30,000,000 target
-        const percentage = (total / 30000000) * 100;
-
-        // Show higher precision if percentage is tiny, otherwise 2 decimals
-        if (percentage > 0 && percentage < 0.01) {
-            statProgress.innerText = percentage.toFixed(4) + "%";
-        } else {
-            statProgress.innerText = percentage.toFixed(2) + "%";
         }
 
     } catch (err) {
         console.error("Error loading server statistics:", err);
-        statBuildings.innerText = "--";
-        statProgress.innerText = "--%";
     }
 }
