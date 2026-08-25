@@ -104,11 +104,11 @@ window.addEventListener("load", () => {
 
 function updateStatsBox(data){
     let statsBoxName = "ProfileStatsBox"
-        addStat(statsBoxName,"Buildings",data.buildings.toString())
-        addStat(statsBoxName, "Tplls", data.tplls.toString())
-    addStat(statsBoxName,"Time Non-AFK", data.timeNonAFK.toFixed(2) + " days")
-    addStat(statsBoxName,"Productivity grade", data.productivity)
+        addStat(statsBoxName,"Buildings",data.buildings.toString(),"","")
+        addStat(statsBoxName, "Tplls", data.tplls.toString(),"","")
+    addStat(statsBoxName,"Time Non-AFK", data.timeNonAFK.toFixed(2) + " days","","")
+    addStat(statsBoxName,"Productivity grade", data.productivity,"","green")
     if (data.reviewsCompleted > 0){
-        addStat(statsBoxName, "Reviews", data.reviewsCompleted.toString())
+        addStat(statsBoxName, "Reviews", data.reviewsCompleted.toString(),"","")
     }
 }

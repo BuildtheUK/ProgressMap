@@ -415,9 +415,9 @@ async function loadServerStats() {
             } else {
                 percentageText = data.percentage.toFixed(2) + "%";
             }
-            addStat(statBoxName,"Buildings last month",data.buildingsRecent)
-            addStat(statBoxName,"Percentage Complete",percentageText)
-            addStat(statBoxName,"Estimated Completion", formatDate(data.estimatedFinishDate))
+            addStat(statBoxName,"Buildings last month",data.buildingsRecent,"","")
+            addStat(statBoxName,"Percentage Complete",percentageText,"","")
+            addStat(statBoxName,"Estimated Completion", formatDate(data.estimatedFinishDate),"","")
 
         }
 
