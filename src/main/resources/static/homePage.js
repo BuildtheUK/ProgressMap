@@ -13,6 +13,8 @@ const regionInfoBox = document.getElementById("RegionInfoBox")
 const buildingInfoBox = document.getElementById("BuildingInfoBox")
 const noItemSelectedInfoBox = document.getElementById("NoItemSelected")
 const profileIcon = document.getElementById("MCSkinLogo")
+const btnCloseWelcome = document.getElementById("btnCloseWelcome")
+
 var loggedIn = false;
 var username = ""
 var buildingSelected = false;
@@ -317,12 +319,30 @@ closeRegionBtn.addEventListener("click", displayWelcomeBox);
 const welcomeMessage = document.getElementById("welcomeMessage")
 const welcomeTitle = document.getElementById("welcomeTitle")
 
+btnCloseWelcome.addEventListener("click", () => {noItemSelectedInfoBox.style.display = "none"; serverStatsBox.style.display ="flex"; welcomeMessageRemoved = true;});
+
 function displayWelcomeBox() {
     buildingInfoBox.style.display = "none";
     regionInfoBox.style.display = "none";
-    serverStatsBox.style.display = "flex";
-    noItemSelectedInfoBox.style.display = "flex";
-    sidebarDivider.style.display = "block";
+
+    if (isMobile()) {
+        if (!welcomeMessageRemoved) {
+            noItemSelectedInfoBox.style.display = "flex";
+            serverStatsBox.style.display = "none";
+        }
+        else{
+            noItemSelectedInfoBox.style.display = "none";
+            serverStatsBox.style.display = "flex";
+        }
+        sidebarDivider.style.display = "none";
+
+    }
+    else{
+        noItemSelectedInfoBox.style.display = "flex";
+        sidebarDivider.style.display = "block";
+        serverStatsBox.style.display = "flex";
+    }
+
     if (loggedIn) {
         welcomeTitle.innerHTML = `Hello, ${username}! Welcome back to BTUK Progress Map.`
         welcomeMessage.innerHTML = "Explore our current progress or create and edit your own claims! (eventually)"
@@ -335,6 +355,7 @@ function displayWelcomeBox() {
 const buildingId = document.getElementById("buildingId")
 const buildingBuilder = document.getElementById("buildingBuilder")
 const buildingDate = document.getElementById("buildingCreatedDate")
+let welcomeMessageRemoved = false
 
 function displayBuildingBox(building) {
     // Hide default views and tabs
@@ -348,6 +369,18 @@ function displayBuildingBox(building) {
     buildingBuilder.innerText = building.username
     buildingDate.innerText = formatDate(building.timeAdded)
 }
+
+function isMobile() {
+    return window.matchMedia("(max-width: 800px)").matches;
+}
+
+window.addEventListener("resize", () => {
+    // if there is not item info selected update page to have the correct stylings
+    if (noItemSelectedInfoBox.style.display === "flex" || serverStatsBox.style.display === "flex") {
+        displayWelcomeBox();
+    }
+});
+
 
 function formatDate(dateStr) {
     if (!dateStr) return "Unknown";

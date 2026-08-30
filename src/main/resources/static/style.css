@@ -220,6 +220,10 @@ select {
     border-radius: 20px 0 0 20px;
 }
 
+#btnCloseWelcome {
+    display: none;
+}
+
 /* Close button for inspecting items */
 .CloseBoxBtn {
     position: absolute;
@@ -579,6 +583,19 @@ div:has(input:focus) > button {
         display: none !important;
     }
 
+    .SidebarBox {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    #btnCloseWelcome {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+    }
+
     .sidebarTitle {
         font-size: 1.1rem;
         margin-bottom: 2px;
@@ -597,12 +614,8 @@ div:has(input:focus) > button {
     }
 
     #NoItemSelected {
-        border-right: 1px solid var(--input-colour);
-        padding-right: 10px;
-    }
-
-    #ServerStatsBox {
-        padding-left: 10px;
+        position: relative;
+        padding-top: 25px;
     }
 
     /* Full width when inspecting single items */
