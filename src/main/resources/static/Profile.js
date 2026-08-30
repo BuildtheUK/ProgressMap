@@ -1,4 +1,5 @@
 import {initiatePasswordBoxButtons} from "./PasswordUtils.js";
+import {addStat} from "./StatsUtils.js";
 
 const btnDelete = document.getElementById("btnDeleteAccount")
 const btnConfirmDelete = document.getElementById("btnConfirmDeleteAccount")
@@ -6,6 +7,8 @@ const btnReturn = document.getElementById("btnSafety")
 const popup = document.getElementById("DeleteAccountPopup")
 const passwordInput = document.getElementById("passwordInput")
 const errorMessage = document.getElementById("errorMessage")
+
+const standardColourGradient = ["#07b804","#5bb804","#b2b804","#b88e04","#b85e04","#b80404"]
 
 initiatePasswordBoxButtons()
 
@@ -82,8 +85,8 @@ window.addEventListener("load", () => {
             window.location.assign("login.html");
         });
 
-    fetch("/building/buildingPersonalCount", {
-        method: "POST",
+    fetch("/stats/profile", {
+        method: "GET",
         credentials: "include"
     })
         .then(res => {
@@ -91,8 +94,8 @@ window.addEventListener("load", () => {
             return res.json();
         })
         .then(data => {
-            if (data && data.count !== undefined) {
-                buildingCount.innerText = data.count;
+            if (data) {
+                updateStatsBox(data)
             }
         })
         .catch(err => {
@@ -100,3 +103,34 @@ window.addEventListener("load", () => {
             buildingCount.innerText = "0";
         });
 });
+
+function updateStatsBox(data){
+    let statsBoxName = "ProfileStatsBox"
+        addStat(statsBoxName,"Buildings",data.buildings.toString(),"","")
+        addStat(statsBoxName, "Tplls", data.tplls.toString(),"","")
+    addStat(statsBoxName,"Time Non-AFK", data.timeNonAFK.toFixed(2) + " days","","")
+    let colour = getProductivityColour(data.productivity)
+    addStat(statsBoxName,"Productivity grade", data.productivity,"", colour)
+    if (data.reviewsCompleted > 0){
+        addStat(statsBoxName, "Reviews", data.reviewsCompleted.toString(),"","")
+    }
+}
+
+function getProductivityColour(productivity){
+    switch (productivity){
+        case "A":
+            return standardColourGradient[0]
+        case "B":
+            return standardColourGradient[1]
+        case "C":
+            return standardColourGradient[2]
+        case "D":
+            return standardColourGradient[3]
+        case "E":
+            return standardColourGradient[4]
+        case "F":
+            return standardColourGradient[5]
+        default:
+            return "#000000"
+    }
+}

@@ -2,8 +2,10 @@ package com.example.maphub.services;
 
 
 
-import com.example.maphub.entities.BuildingDTO;
-import com.example.maphub.entities.BuildingGridItem;
+import com.example.maphub.entities.buildings.BuildingDTO;
+import com.example.maphub.entities.buildings.BuildingGridItem;
+import com.example.maphub.entities.stats.PlayerBaseStats;
+import com.example.maphub.entities.stats.TotalBaseStats;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -171,7 +174,7 @@ public class ProxyAPIService {
     /**
      * Gets building counts with optional filtering by area, players, visibility, or source
      */
-    public int getBuildingCount(List<String> playerUuids, Double minLat, Double maxLat, Double minLon, Double maxLon, Boolean isPublic, Boolean playerBuilt) {
+    public int getBuildingCount(List<String> playerUuids, Double minLat, Double maxLat, Double minLon, Double maxLon, Boolean isPublic, Boolean playerBuilt, LocalDateTime from, LocalDateTime to) {
         try {
             BuildingCountDTO response = restClient.get()
                     .uri(uriBuilder -> {
@@ -182,6 +185,8 @@ public class ProxyAPIService {
                         if (maxLon != null) builder.queryParam("maxLon", maxLon);
                         if (isPublic != null) builder.queryParam("isPublic", isPublic);
                         if (playerBuilt != null) builder.queryParam("playerBuilt", playerBuilt);
+                        if (from != null) builder.queryParam("from", from.toString());
+                        if (to != null) builder.queryParam("to", to.toString());
                         if (playerUuids != null && !playerUuids.isEmpty()) {
                             for (String uuid : playerUuids) {
                                 builder.queryParam("playerUuid", uuid);
@@ -237,5 +242,38 @@ public class ProxyAPIService {
     public record BuildingGridResponseDTO(
             List<BuildingGridItem> cells
     ) {}
-    
+
+    public TotalBaseStats getTotalStats(){
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> {
+                        var builder = uriBuilder.path("/stats/total");
+                        return builder.build();
+                    })
+                    .retrieve()
+                    .body(TotalBaseStats.class);
+        } catch (Exception e) {
+            System.err.println("Error fetching total stats: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public PlayerBaseStats getPlayerStats(String uuid){
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> {
+                        var builder = uriBuilder.path("/stats/player");
+                        if (uuid != null && !uuid.isBlank()) {
+                            builder.queryParam("uuid", uuid);
+                        }
+                        return builder.build();
+                    })
+                    .retrieve()
+                    .body(PlayerBaseStats.class);
+        } catch (Exception e) {
+            System.err.println("Error fetching player stats: " + e.getMessage());
+            return null;
+        }
+    }
+
 }

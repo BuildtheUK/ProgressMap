@@ -1,29 +1,27 @@
-package com.example.maphub;
+package com.example.maphub.services;
 
 import com.example.maphub.entities.*;
-import com.example.maphub.services.ProxyAPIService;
+import com.example.maphub.entities.buildings.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.TemporalAmount;
 import java.util.*;
 
-@RestController
-@RequestMapping("/building")
-public class BuildingController {
-
-    final private ProxyAPIService proxyAPIService;
-
-    public BuildingController(ProxyAPIService proxyAPIService){
+@Service
+public class BuildingService {
+    private final ProxyAPIService proxyAPIService;
+    public BuildingService(ProxyAPIService proxyAPIService){
         this.proxyAPIService = proxyAPIService;
     }
 
-    @PostMapping("/allBuildings")
-    public ResponseEntity<?> getAllBuildings(@RequestBody MapBounds req, Principal principal){
+    public List<Building> getAllBuildings(@RequestBody MapBounds req, Principal principal){
         String uuid = "";
         if (principal == null){
             uuid = null;
@@ -52,7 +50,7 @@ public class BuildingController {
             }
             out.add(new Building(b.buildingId(),uuidDisplay, b.isPublic(), b.playerBuilt(),timeAdded ,b.lat(),b.lon(),colour,username));
         }
-        return ResponseEntity.ok(out);
+        return out;
     }
 
     private LocalDateTime parseTimestamp(String timestampStr) {
@@ -67,20 +65,29 @@ public class BuildingController {
         }
     }
 
-    @PostMapping("/gridCount")
-    public ResponseEntity<?> getGridCount(@RequestBody BuildingGridRequest req, Principal principal) {
+    public List<BuildingGridItem> getGridCount(BuildingGridRequest req, Principal principal) {
         String uuid = "";
-        if (principal == null){
+        if (principal == null) {
             uuid = null;
-        }
-        else{
+        } else {
             uuid = principal.getName();
         }
 
-        ProxyAPIService.BuildingGridResponseDTO resp = proxyAPIService.getBuildingGridCount(req.minLat(), req.maxLat(), req.minLon(), req.maxLon(), req.stepLat(), req.stepLon(),uuid);
+        double baseStep = 0.05;
 
+        // Halve the step size for every zoom level in
+        double latStep = baseStep / Math.pow(2, req.zoom() - 10);
+
+        // Adjust longitude step to maintain visually square cells at current latitude
+        double lonStep = latStep / Math.cos(req.centreLat() * Math.PI / 180);
+
+
+        return proxyAPIService.getBuildingGridCount(req.minLat(), req.maxLat(), req.minLon(), req.maxLon(), latStep, lonStep, uuid).cells();
+    }
+
+    public List<BuildingGridRespItem> getGroupedGridCounts(List<BuildingGridItem> original){
         Map<xy, BuildingGridItem> gridMap = new HashMap<>();
-        for (BuildingGridItem dto : resp.cells()) {
+        for (BuildingGridItem dto : original) {
             if (dto.count() > 0) {
                 gridMap.put(new xy(dto.row, dto.col), dto);
             }
@@ -141,25 +148,25 @@ public class BuildingController {
                 .map(cell -> new BuildingGridRespItem(cell.lat, cell.lon, cell.count))
                 .toList();
 
-        return ResponseEntity.ok(out);
+        return out;
     }
 
     private record xy (int x, int y){}
 
-    @PostMapping("/buildingCountTotal")
-    public ResponseEntity<?> getTotalBuildings() {
-        int count = proxyAPIService.getBuildingCount(null,null,null,null,null,null,null);
-        return ResponseEntity.ok(Map.of("count", count));
+    public int getTotalCount() {
+        int count = proxyAPIService.getBuildingCount(null,null,null,null,null,null,null,null,null);
+        return count;
+    }
+    public int getPlayerCount(String uuid) {
+        int count = proxyAPIService.getBuildingCount(List.of(uuid),null,null,null,null,null,null,null,null);
+        return count;
     }
 
-    @PostMapping("/buildingPersonalCount")
-    public ResponseEntity<?> getPlayerCount(Principal principal) {
-        if (principal == null) {
-            return ResponseEntity.ok(Map.of("count", 0));
-        }
-        String uuid = principal.getName();
-        // Fetch buildings filtered specifically by the authenticated player's UUID
-        int count = proxyAPIService.getBuildingCount(List.of(uuid), null, null, null, null, null, true);
-        return ResponseEntity.ok(Map.of("count", count));
+    public int getRecentBuildingCount(){
+        int count = proxyAPIService.getBuildingCount(null,null,null,null,null,null,null, LocalDateTime.now().minusMonths(1), LocalDateTime.now());
+        return count;
     }
+
+
+
 }

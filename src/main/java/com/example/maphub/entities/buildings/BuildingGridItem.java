@@ -1,4 +1,4 @@
-package com.example.maphub.entities;
+package com.example.maphub.entities.buildings;
 
 public class BuildingGridItem {
     public double lat;
@@ -6,6 +6,10 @@ public class BuildingGridItem {
     public int count;
     public int row;
     public int col;
+    public double minLat;
+    public double minLon;
+    public double maxLat;
+    public double maxLon;
 
     public int count() {
         return count;

@@ -1,4 +1,4 @@
-package com.example.maphub.entities;
+package com.example.maphub.entities.otc;
 
 import jakarta.persistence.*;
 

@@ -14,6 +14,8 @@
     --text-light-colour: white;
     --incorrect-colour: red;
     --incorrect-colour-focussed: #910101;
+    --negative-colour: #d32f2f;
+    --positive-colour: #2e7d32;
 }
 
 
@@ -218,6 +220,10 @@ select {
     border-radius: 20px 0 0 20px;
 }
 
+#btnCloseWelcome {
+    display: none;
+}
+
 /* Close button for inspecting items */
 .CloseBoxBtn {
     position: absolute;
@@ -272,6 +278,27 @@ select {
     font-size: 1rem;
     color: var(--accent-colour);
     text-align: right;
+}
+
+.StatValueContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+}
+
+.StatIcon {
+    font-size: 1rem;
+    text-align: right;
+}
+
+/* Color States */
+.stat-increase .StatIcon {
+    color: var(--positive-colour);
+}
+
+.stat-decrease .StatIcon {
+    color: var(--negative-colour);
 }
 
 /* ==========================================================================
@@ -446,6 +473,7 @@ div:has(input:focus) > button {
     align-items: center;
     flex-direction: column;
     width: 80%;
+    gap: 10px;
 }
 
 /* ==========================================================================
@@ -555,6 +583,19 @@ div:has(input:focus) > button {
         display: none !important;
     }
 
+    .SidebarBox {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    #btnCloseWelcome {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+    }
+
     .sidebarTitle {
         font-size: 1.1rem;
         margin-bottom: 2px;
@@ -573,12 +614,8 @@ div:has(input:focus) > button {
     }
 
     #NoItemSelected {
-        border-right: 1px solid var(--input-colour);
-        padding-right: 10px;
-    }
-
-    #ServerStatsBox {
-        padding-left: 10px;
+        position: relative;
+        padding-top: 25px;
     }
 
     /* Full width when inspecting single items */

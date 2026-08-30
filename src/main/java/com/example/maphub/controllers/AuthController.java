@@ -1,5 +1,9 @@
-package com.example.maphub;
+package com.example.maphub.controllers;
+import com.example.maphub.PasswordUtil;
 import com.example.maphub.entities.*;
+import com.example.maphub.entities.otc.NewOTCRequest;
+import com.example.maphub.entities.otc.OTCResetPasswordRequest;
+import com.example.maphub.entities.otc.VerificationResponse;
 import com.example.maphub.services.OTCService;
 import com.example.maphub.services.PasswordValidationService;
 import com.example.maphub.services.ProxyAPIService;
@@ -8,11 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.plaf.synth.SynthTabbedPaneUI;
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -81,7 +82,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(passwordErrors);
         }
         userService.deleteByUuid(uuid);
-        userService.register(uuid,PasswordUtil.hash(user.password));
+        userService.register(uuid, PasswordUtil.hash(user.password));
         otcService.createOneTimeCode(uuid,"REGISTER");//should be a const in the future
         return ResponseEntity.ok("OTC Created");
     }
