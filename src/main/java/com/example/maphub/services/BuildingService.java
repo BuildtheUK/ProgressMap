@@ -73,8 +73,18 @@ public class BuildingService {
             uuid = principal.getName();
         }
 
-        return proxyAPIService.getBuildingGridCount(req.minLat(), req.maxLat(), req.minLon(), req.maxLon(), req.stepLat(), req.stepLon(), uuid).cells();
+        double baseStep = 0.05;
+
+        // Halve the step size for every zoom level in
+        double latStep = baseStep / Math.pow(2, req.zoom() - 10);
+
+        // Adjust longitude step to maintain visually square cells at current latitude
+        double lonStep = latStep / Math.cos(req.centreLat() * Math.PI / 180);
+
+
+        return proxyAPIService.getBuildingGridCount(req.minLat(), req.maxLat(), req.minLon(), req.maxLon(), latStep, lonStep, uuid).cells();
     }
+
     public List<BuildingGridRespItem> getGroupedGridCounts(List<BuildingGridItem> original){
         Map<xy, BuildingGridItem> gridMap = new HashMap<>();
         for (BuildingGridItem dto : original) {

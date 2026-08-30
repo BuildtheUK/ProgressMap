@@ -134,15 +134,13 @@ async function updateLayers() {
 async function getOverview() {
     const bounds = map.getBounds();
     const zoom = map.getZoom();
-    const { latStep, lonStep } = getGridStepSizes(zoom, map.getCenter().lat);
-
     const requestData = {
         minLat: bounds.getSouth(),
         minLon: bounds.getWest(),
         maxLat: bounds.getNorth(),
         maxLon: bounds.getEast(),
-        stepLat: latStep,
-        stepLon: lonStep
+        zoom: zoom,
+        centreLat: map.getCenter().lat
     };
 
     try {
@@ -254,19 +252,6 @@ function updateMarkerGroupCounts(buildingGridItems) {
             addGroupMarkerToMap(marker, markerMessage);
         }
     });
-}
-
-function getGridStepSizes(zoom, centerLat) {
-    // Base step size at zoom level 10 (approx ~0.05 degrees)
-    const baseStep = 0.05;
-
-    // Halve the step size for every zoom level in
-    const latStep = baseStep / Math.pow(2, zoom - 10);
-
-    // Adjust longitude step to maintain visually square cells at current latitude
-    const lonStep = latStep / Math.cos(centerLat * Math.PI / 180);
-
-    return { latStep, lonStep };
 }
 
 function addGroupMarkerToMap(marker, markerMessage) {
