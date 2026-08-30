@@ -400,7 +400,14 @@ async function loadServerStats() {
             } else {
                 percentageText = data.percentage.toFixed(2) + "%";
             }
-            addStat(statBoxName,"Buildings last month",data.buildingsRecent,"","")
+            let changeIcon = ""
+            if (data.previousRecentBuildings > data.buildingsRecent){
+                changeIcon = "Decrease"
+            }
+            else if (data.previousRecentBuildings < data.buildingsRecent){
+                changeIcon = "Increase"
+            }
+            addStat(statBoxName,"Buildings last month",data.buildingsRecent,changeIcon,"")
             addStat(statBoxName,"Percentage Complete",percentageText,"","")
             addStat(statBoxName,"Estimated Completion", formatDate(data.estimatedFinishDate),"","")
 
