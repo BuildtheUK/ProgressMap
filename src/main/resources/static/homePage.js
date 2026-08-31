@@ -24,6 +24,8 @@ var heatmapColours = redHeatmapColours
 const gridMarkerGroup = L.layerGroup().addTo(map);
 const buildingMarkerGroup = L.layerGroup().addTo(map);
 const heatMapGroup = L.layerGroup().addTo(map);
+const regionMarkerGroup = L.layerGroup().addTo(map);
+const progressAreaMarkerGroup = L.layerGroup().addTo(map);
 var buildings = []
 
 const stepIcon = L.icon({
@@ -113,15 +115,16 @@ map.on("moveend", () => {
 map.on("click",() => {if (buildingSelected){displayWelcomeBox(); buildingSelected = false}})
 
 async function updateLayers() {
+    clearLayers()
     if (map.getZoom() >= 17) {
-        gridMarkerGroup.clearLayers();
-        heatMapGroup.clearLayers();
         const dto = await getCloseUp();
         if (dto && dto.buildings) {
             updateBuildingsInView(dto.buildings);
         }
+        if (dto && dto.polygons){
+            updateProgressAreasInView(dto.polygons);
+        }
     } else {
-        buildingMarkerGroup.clearLayers();
         const dto = await getOverview();
         if (dto) {
             if (dto.buildings) {
@@ -186,7 +189,6 @@ async function getCloseUp() {
 }
 
 function updateHeatmapView(heatmapItems) {
-    heatMapGroup.clearLayers();
 
     heatmapItems.forEach(item => {
         // Construct bounding rectangle coordinates: [[south, west], [north, east]]
@@ -209,7 +211,6 @@ function updateHeatmapView(heatmapItems) {
 }
 
 function updateBuildingsInView(buildings){
-        buildingMarkerGroup.clearLayers();
 
         buildings.forEach(building => {
             // Create a standard or custom marker at building coordinates
@@ -239,13 +240,54 @@ function updateBuildingsInView(buildings){
         });
     }
 
+function updateProgressAreasInView (polygonData){
+        const geoJsonLayer = L.geoJSON(polygonData, {
+            style: function(feature) {
+                return {
+                    color: feature.properties?.stroke || '#00FF00',
+                    fillColor: feature.properties?.fill || '#00FF00',
+                    weight: feature.properties?.['stroke-width'] || 2,
+                    opacity: feature.properties?.['stroke-opacity'] ?? 0.5,
+                    fillOpacity: feature.properties?.['fill-opacity'] ?? 0.5
+                };
+            },
+            // Optional: Attach events or popups to individual features
+            onEachFeature: function(feature, layer) {
+                if (feature.properties) {
+                    // Example: Open a popup with extra metadata properties on click
+                    const name = feature.properties.name || 'Unnamed';
+                    const builder = feature.properties.builders || 'Unknown';
+                    const date = feature.properties.date || 'Unknown';
+
+                    layer.bindPopup(`
+                    <div>
+                        <strong>Name:</strong> ${name}<br/>
+                        <strong>Builder:</strong> ${builder}<br/>
+                        <strong>Date:</strong> ${date}
+                    </div>
+                `);
+                }
+            }
+        });
+
+        // 2. Add the created GeoJSON layer to your progressAreaMarkerGroup
+        progressAreaMarkerGroup.addLayer(geoJsonLayer);
+    }
+
 function onBuildingClick(buildingData) {
     buildingSelected = true
     displayBuildingBox(buildingData)
 }
 
-function updateMarkerGroupCounts(buildingGridItems) {
+function clearLayers(){
     gridMarkerGroup.clearLayers();
+    regionMarkerGroup.clearLayers();
+    progressAreaMarkerGroup.clearLayers();
+    buildingMarkerGroup.clearLayers();
+    heatMapGroup.clearLayers();
+}
+
+function updateMarkerGroupCounts(buildingGridItems) {
 
     buildingGridItems.forEach(item => {
         if (item.count > 0) {

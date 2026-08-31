@@ -7,6 +7,7 @@ import com.example.maphub.entities.mapResponses.CloseUpResponse;
 import com.example.maphub.entities.mapResponses.OverviewResponse;
 import com.example.maphub.services.BuildingService;
 import com.example.maphub.services.HeatmapService;
+import com.example.maphub.services.OldPolygonAPIService;
 import com.example.maphub.services.ProxyAPIService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
