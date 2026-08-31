@@ -5,6 +5,6 @@ public record BuildingGridRequest (
     double minLon,
     double maxLat,
     double maxLon,
-    double stepLat,
-    double stepLon
+    int zoom,
+    double centreLat
 ) {}

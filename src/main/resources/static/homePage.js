@@ -1,4 +1,7 @@
-const map = L.map('map').setView([51.505, -0.09], 10);
+import {addStat} from "./StatsUtils.js";
+
+//set map centre to cover whole UK
+const map = L.map('map').setView([54.06801502799949, -3.8921490108560857], 5);
 
 const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -10,6 +13,8 @@ const regionInfoBox = document.getElementById("RegionInfoBox")
 const buildingInfoBox = document.getElementById("BuildingInfoBox")
 const noItemSelectedInfoBox = document.getElementById("NoItemSelected")
 const profileIcon = document.getElementById("MCSkinLogo")
+const btnCloseWelcome = document.getElementById("btnCloseWelcome")
+
 var loggedIn = false;
 var username = ""
 var buildingSelected = false;
@@ -131,15 +136,13 @@ async function updateLayers() {
 async function getOverview() {
     const bounds = map.getBounds();
     const zoom = map.getZoom();
-    const { latStep, lonStep } = getGridStepSizes(zoom, map.getCenter().lat);
-
     const requestData = {
         minLat: bounds.getSouth(),
         minLon: bounds.getWest(),
         maxLat: bounds.getNorth(),
         maxLon: bounds.getEast(),
-        stepLat: latStep,
-        stepLon: lonStep
+        zoom: zoom,
+        centreLat: map.getCenter().lat
     };
 
     try {
@@ -253,19 +256,6 @@ function updateMarkerGroupCounts(buildingGridItems) {
     });
 }
 
-function getGridStepSizes(zoom, centerLat) {
-    // Base step size at zoom level 10 (approx ~0.05 degrees)
-    const baseStep = 0.05;
-
-    // Halve the step size for every zoom level in
-    const latStep = baseStep / Math.pow(2, zoom - 10);
-
-    // Adjust longitude step to maintain visually square cells at current latitude
-    const lonStep = latStep / Math.cos(centerLat * Math.PI / 180);
-
-    return { latStep, lonStep };
-}
-
 function addGroupMarkerToMap(marker, markerMessage) {
     marker.bindTooltip(
         `<span style="font-size: ${getGroupIconFontSize(markerMessage)};">${markerMessage}</span>`,
@@ -329,12 +319,30 @@ closeRegionBtn.addEventListener("click", displayWelcomeBox);
 const welcomeMessage = document.getElementById("welcomeMessage")
 const welcomeTitle = document.getElementById("welcomeTitle")
 
+btnCloseWelcome.addEventListener("click", () => {noItemSelectedInfoBox.style.display = "none"; serverStatsBox.style.display ="flex"; welcomeMessageRemoved = true;});
+
 function displayWelcomeBox() {
     buildingInfoBox.style.display = "none";
     regionInfoBox.style.display = "none";
-    serverStatsBox.style.display = "flex";
-    noItemSelectedInfoBox.style.display = "flex";
-    sidebarDivider.style.display = "block";
+
+    if (isMobile()) {
+        if (!welcomeMessageRemoved) {
+            noItemSelectedInfoBox.style.display = "flex";
+            serverStatsBox.style.display = "none";
+        }
+        else{
+            noItemSelectedInfoBox.style.display = "none";
+            serverStatsBox.style.display = "flex";
+        }
+        sidebarDivider.style.display = "none";
+
+    }
+    else{
+        noItemSelectedInfoBox.style.display = "flex";
+        sidebarDivider.style.display = "block";
+        serverStatsBox.style.display = "flex";
+    }
+
     if (loggedIn) {
         welcomeTitle.innerHTML = `Hello, ${username}! Welcome back to BTUK Progress Map.`
         welcomeMessage.innerHTML = "Explore our current progress or create and edit your own claims! (eventually)"
@@ -347,7 +355,7 @@ function displayWelcomeBox() {
 const buildingId = document.getElementById("buildingId")
 const buildingBuilder = document.getElementById("buildingBuilder")
 const buildingDate = document.getElementById("buildingCreatedDate")
-const buildingIsClaimed = document.getElementById("isClaimed")
+let welcomeMessageRemoved = false
 
 function displayBuildingBox(building) {
     // Hide default views and tabs
@@ -360,53 +368,85 @@ function displayBuildingBox(building) {
     buildingId.innerText = building.buildingId
     buildingBuilder.innerText = building.username
     buildingDate.innerText = formatDate(building.timeAdded)
-    buildingIsClaimed.innerText = building.playerBuilt
 }
+
+function isMobile() {
+    return window.matchMedia("(max-width: 800px)").matches;
+}
+
+window.addEventListener("resize", () => {
+    // if there is not item info selected update page to have the correct stylings
+    if (noItemSelectedInfoBox.style.display === "flex" || serverStatsBox.style.display === "flex") {
+        displayWelcomeBox();
+    }
+});
+
 
 function formatDate(dateStr) {
     if (!dateStr) return "Unknown";
+
+    // Handle dates beyond JavaScript Date's representable range
+    const yearMatch = dateStr.match(/^\+?(\d+)-/);
+
+    if (yearMatch) {
+        const year = Number(yearMatch[1]);
+
+        if (year > 999999){
+            return `~${((year - 2026) / 1_000_000).toFixed(1)} million years`;
+        }
+        if (year > 9999) {
+            return `~${((year - 2026) / 1_000).toFixed(1)} thousand years`;
+        }
+    }
+
     const date = new Date(dateStr);
 
-    // If the input is not a valid date parseable by JS, return original string
     if (isNaN(date.getTime())) return dateStr;
+    console.log("date is valid")
+
+    const cutoffDate = new Date("2026-03-15T00:00:00");
+    if (date < cutoffDate) return "Unknown";
+
+    const year = date.getFullYear();
 
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
 
     return `${day}-${month}-${year}`;
 }
 
-const statBuildings = document.getElementById("statBuildings");
-const statProgress = document.getElementById("statProgress");
-
 async function loadServerStats() {
     try {
-        const response = await fetch("/building/total", {
-            method: "GET"
+        const response = await fetch("/stats/homePage", {
+            method: "GET",
+            credentials: "include"
         });
 
         if (!response.ok) throw new Error("Failed to fetch server stats");
-
         const data = await response.json();
-        const total = data.count || 0;
+        if (data){
+            let statBoxName = "ServerStatsBox"
+            addStat(statBoxName,"Buildings",data.buildings.toString())
+            let percentageText = ""
+            if (data.percentage > 0 && data.percentage < 0.01) {
+                percentageText = data.percentage.toFixed(4) + "%";
+            } else {
+                percentageText = data.percentage.toFixed(2) + "%";
+            }
+            let changeIcon = ""
+            if (data.previousRecentBuildings > data.buildingsRecent){
+                changeIcon = "Decrease"
+            }
+            else if (data.previousRecentBuildings < data.buildingsRecent){
+                changeIcon = "Increase"
+            }
+            addStat(statBoxName,"Buildings last month",data.buildingsRecent,changeIcon,"")
+            addStat(statBoxName,"Percentage Complete",percentageText,"","")
+            addStat(statBoxName,"Estimated Completion", formatDate(data.estimatedFinishDate),"","")
 
-        // Display total formatted with commas (e.g., 12,345)
-        statBuildings.innerText = total.toLocaleString();
-
-        // Calculate percentage complete based on 30,000,000 target
-        const percentage = (total / 30000000) * 100;
-
-        // Show higher precision if percentage is tiny, otherwise 2 decimals
-        if (percentage > 0 && percentage < 0.01) {
-            statProgress.innerText = percentage.toFixed(4) + "%";
-        } else {
-            statProgress.innerText = percentage.toFixed(2) + "%";
         }
 
     } catch (err) {
         console.error("Error loading server statistics:", err);
-        statBuildings.innerText = "--";
-        statProgress.innerText = "--%";
     }
 }

@@ -11,7 +11,7 @@
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="homePage.js" defer></script>
+    <script type="module" src="homePage.js" defer></script>
 </head>
 <body>
     <div class="Page-Container">
@@ -37,6 +37,7 @@
         <div class="map" id="map"></div>
         <div class="sidebar">
                 <div class="ItemInfoBox SidebarBox" id="NoItemSelected">
+                    <button class="CloseBoxBtn" id="btnCloseWelcome" title="Close">&times;</button>
                     <p class="sidebarTitle" id="welcomeTitle">Welcome</p>
                     <p id="welcomeMessage">Have a look around or create an account to link to your Minecraft account</p>
                 </div>
@@ -45,14 +46,6 @@
 
                 <div class="ItemInfoBox SidebarBox" id="ServerStatsBox" style="display: none;">
                     <p class="sidebarTitle">Server Statistics</p>
-                    <div class="StatCard">
-                        <span class="StatLabel">Buildings Made</span>
-                        <strong class="StatValue" id="statBuildings">--</strong>
-                    </div>
-                    <div class="StatCard">
-                        <span class="StatLabel">Percentage Complete</span>
-                        <strong class="StatValue" id="statProgress">--%</strong>
-                    </div>
                 </div>
 
                 <div class="ItemInfoBox SidebarBox" id="BuildingInfoBox" style="display: none;">
@@ -69,10 +62,6 @@
                     <div class="StatCard">
                         <span class="StatLabel">Date built</span>
                         <strong class="StatValue" id="buildingCreatedDate">--</strong>
-                    </div>
-                    <div class="StatCard">
-                        <span class="StatLabel">Is claimed</span>
-                        <strong class="StatValue" id="isClaimed">--</strong>
                     </div>
                 </div>
 

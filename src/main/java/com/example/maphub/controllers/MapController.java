@@ -34,8 +34,8 @@ public class MapController {
     public ResponseEntity<?> getOverview(@RequestBody BuildingGridRequest req, Principal principal){
         List<BuildingGridItem> buildings = buildingService.getGridCount(req,principal);
         OverviewResponse resp = new OverviewResponse();
+        resp.heatmap = heatmapService.getHeatmap(buildings, buildingService.getTotalCount());
         resp.buildings = buildingService.getGroupedGridCounts(buildings);
-        resp.heatmap = heatmapService.getHeatmap(buildings, proxyAPIService.getBuildingCount(null,null,null,null,null,null,null));
         return ResponseEntity.ok(resp);
     }
     @PostMapping("/closeUp")
