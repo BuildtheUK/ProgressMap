@@ -1,9 +1,11 @@
 package com.example.maphub.services;
+import com.example.maphub.entities.mapResponses.ProgressArea;
+import org.locationtech.jts.geom.Polygon;
 
-import org.geojson.FeatureCollection;
+import java.util.List;
 
 public interface PolygonAPI {
 
-    public FeatureCollection getPolygons(double minLat, double minLon, double maxLat, double maxLon, String uuid);
+    public List<ProgressArea> getPolygons(double minLat, double minLon, double maxLat, double maxLon, String uuid);
 
 }

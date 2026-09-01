@@ -115,23 +115,23 @@ map.on("moveend", () => {
 map.on("click",() => {if (buildingSelected){displayWelcomeBox(); buildingSelected = false}})
 
 async function updateLayers() {
-    clearLayers()
     if (map.getZoom() >= 17) {
         const dto = await getCloseUp();
-        if (dto && dto.buildings) {
+            clearLayers();
             updateBuildingsInView(dto.buildings);
-        }
-        if (dto && dto.polygons){
-            updateProgressAreasInView(dto.polygons);
-        }
+            updateProgressAreasInView(dto.progressArea);
     } else {
         const dto = await getOverview();
+        clearLayers() //goes after fetch to prevent flickering
         if (dto) {
             if (dto.buildings) {
                 updateMarkerGroupCounts(dto.buildings);
             }
             if (dto.heatmap) {
                 updateHeatmapView(dto.heatmap);
+            }
+            if (dto.progressArea){
+                updateProgressAreasInView(dto.progressArea);
             }
         }
     }
@@ -152,6 +152,7 @@ async function getOverview() {
         const response = await fetch("/map/overview", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(requestData)
         });
 
@@ -177,6 +178,7 @@ async function getCloseUp() {
         const response = await fetch("/map/closeUp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(requestData)
         });
 
@@ -241,37 +243,37 @@ function updateBuildingsInView(buildings){
     }
 
 function updateProgressAreasInView (polygonData){
-        const geoJsonLayer = L.geoJSON(polygonData, {
-            style: function(feature) {
-                return {
-                    color: feature.properties?.stroke || '#00FF00',
-                    fillColor: feature.properties?.fill || '#00FF00',
-                    weight: feature.properties?.['stroke-width'] || 2,
-                    opacity: feature.properties?.['stroke-opacity'] ?? 0.5,
-                    fillOpacity: feature.properties?.['fill-opacity'] ?? 0.5
-                };
-            },
-            // Optional: Attach events or popups to individual features
-            onEachFeature: function(feature, layer) {
-                if (feature.properties) {
-                    // Example: Open a popup with extra metadata properties on click
-                    const name = feature.properties.name || 'Unnamed';
-                    const builder = feature.properties.builders || 'Unknown';
-                    const date = feature.properties.date || 'Unknown';
+    console.log("polygon received:", polygonData);
+    polygonData.forEach(area => {
 
-                    layer.bindPopup(`
-                    <div>
-                        <strong>Name:</strong> ${name}<br/>
-                        <strong>Builder:</strong> ${builder}<br/>
-                        <strong>Date:</strong> ${date}
-                    </div>
-                `);
-                }
-            }
+        // Create a standard Leaflet Polygon
+        const polygonLayer = L.polygon(area.coords, {
+            color: area.colour,
+            fillColor: area.colour,
+            fillOpacity: 0.5,
+            weight: 2
         });
 
-        // 2. Add the created GeoJSON layer to your progressAreaMarkerGroup
-        progressAreaMarkerGroup.addLayer(geoJsonLayer);
+        // Attach custom properties directly to the layer instance
+        polygonLayer.customData = {
+            builders: area.builders,
+            percentageComplete: area.percentageComplete,
+            timeFinished: area.timeFinished
+        };
+
+        // Bind popup using the attached data
+        const buildersList = area.builders ? area.builders.join(", ") : "None";
+        polygonLayer.bindPopup(`
+            <div>
+                <strong>Progress Area</strong><br/>
+                <b>Completion:</b> ${area.percentageComplete}%<br/>
+                <b>Builders:</b> ${buildersList}
+            </div>
+        `);
+
+        // Add layer directly to the layer group
+        progressAreaMarkerGroup.addLayer(polygonLayer);
+    });
     }
 
 function onBuildingClick(buildingData) {
