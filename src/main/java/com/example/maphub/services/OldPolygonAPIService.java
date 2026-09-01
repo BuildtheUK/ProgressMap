@@ -1,9 +1,10 @@
 package com.example.maphub.services;
 
-import org.geojson.Feature;
-import org.geojson.FeatureCollection;
-import org.geojson.LngLatAlt;
-import org.geojson.Polygon;
+import com.example.maphub.entities.mapResponses.ProgressArea;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,35 +12,28 @@ import java.util.List;
 
 @Service
 public class OldPolygonAPIService implements PolygonAPI {
-    public FeatureCollection getPolygons( double minLat, double minLon, double maxLat, double maxLon, String uuid) {
+    private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
+    public List<ProgressArea> getPolygons(double minLat, double minLon, double maxLat, double maxLon, String uuid) {
+            Coordinate[] coordinates = new Coordinate[] {
+                    new Coordinate(-2.395048498111797, 51.355557375227946),
+                    new Coordinate(-2.3886775308294825, 51.40741506296923),
+                    new Coordinate(-2.3026080613045874, 51.382421036288996),
+                    new Coordinate(-2.395048498111797, 51.355557375227946)
+            };
 
-        // Define coordinates for a simple triangle/polygon (first and last coordinate must match)
-        List<LngLatAlt> exteriorRing = new ArrayList<>();
-        exteriorRing.add(new LngLatAlt(-105.0, 40.0));
-        exteriorRing.add(new LngLatAlt(-105.0, 41.0));
-        exteriorRing.add(new LngLatAlt(-104.0, 40.0));
-        exteriorRing.add(new LngLatAlt(-105.0, 40.0));
+            List<ProgressArea> polygons = new ArrayList<>();
+            ProgressArea a = new ProgressArea();
+            Polygon poly = geometryFactory.createPolygon(coordinates);
+        a.coords = new ArrayList<>(); // Prevent NullPointerException
 
-        Polygon polygon = new Polygon(exteriorRing);
-
-        // Create Feature and assign geometry
-        Feature feature = new Feature();
-        feature.setGeometry(polygon);
-
-        // Custom metadata properties
-        feature.setProperty("name", "test");
-        feature.setProperty("builders", "leopardm");
-        feature.setProperty("date", "20/05/2006");
-
-        // Simplestyle properties for green color and 50% opacity
-        feature.setProperty("stroke", "#00FF00");
-        feature.setProperty("stroke-opacity", 1);
-        feature.setProperty("fill", "#00FF00");
-        feature.setProperty("fill-opacity", 0.5);
-
-        // Add feature to a FeatureCollection
-        FeatureCollection featureCollection = new FeatureCollection();
-        featureCollection.add(feature);
-        return featureCollection;
+        for (Coordinate c : poly.getCoordinates()) {
+            a.coords.add(new double[]{c.y, c.x}); // [lat, lng] ready for Leaflet L.polygon
+        }
+            a.builders = new ArrayList<String>();
+            a.builders.add("leopardm");
+            a.colour="#555555";
+            a.percentageComplete=45;
+            polygons.add(a);
+            return polygons;
+        }
     }
-}
