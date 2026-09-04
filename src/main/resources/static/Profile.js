@@ -105,14 +105,14 @@ window.addEventListener("load", () => {
 });
 
 function updateStatsBox(data){
-    let statsBoxName = "ProfileStatsBox"
-        addStat(statsBoxName,"Buildings",data.buildings.toString(),"","")
-        addStat(statsBoxName, "Tplls", data.tplls.toString(),"","")
-    addStat(statsBoxName,"Time Non-AFK", data.timeNonAFK.toFixed(2) + " days","","")
+    let statsBox = document.getElementById("ProfileStatsBox")
+        addStat(statsBox,"Buildings",data.buildings.toString())
+        addStat(statsBox, "Tplls", data.tplls.toString())
+    addStat(statsBox,"Time Non-AFK", data.timeNonAFK.toFixed(2) + " days")
     let colour = getProductivityColour(data.productivity)
-    addStat(statsBoxName,"Productivity grade", data.productivity,"", colour)
+    addStat(statsBox,"Productivity grade", data.productivity,"", colour)
     if (data.reviewsCompleted > 0){
-        addStat(statsBoxName, "Reviews", data.reviewsCompleted.toString(),"","")
+        addStat(statsBox, "Reviews", data.reviewsCompleted.toString())
     }
 }
 
