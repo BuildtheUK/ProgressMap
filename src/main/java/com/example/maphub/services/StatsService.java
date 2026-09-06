@@ -60,7 +60,7 @@ public class StatsService {
         resp.buildings = base.buildings;
         resp.messagesSent = base.messagesSent;
         resp.tplls = base.tplls;
-        resp.timeNonAFK = (float)base.timePlayed / MILLIS_IN_DAY;
+        resp.timeNonAFK = (float)base.timePlayed / SECONDS_IN_DAY;
 
         resp.reviewsCompleted = base.reviewsCompleted;
 
@@ -70,8 +70,7 @@ public class StatsService {
             resp.productivity = "N/A";
             return resp;
         }
-        float daysPlayed = (float) base.timePlayed / MILLIS_IN_DAY;
-        float productivity = (buildingWeight * base.buildings + tpllWeight * base.tplls)/daysPlayed;
+        float productivity = (buildingWeight * base.buildings + tpllWeight * base.tplls)/resp.timeNonAFK;
         if(productivity >= 800)
         {
             resp.productivity = "A";
