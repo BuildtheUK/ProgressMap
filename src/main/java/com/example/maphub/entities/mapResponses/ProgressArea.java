@@ -11,4 +11,7 @@ public class ProgressArea {
     public double percentageComplete;
     public LocalDateTime timeFinished;
     public List<double[]> coords;
+    public String title;
+    public String description;
+    public double area;
 }

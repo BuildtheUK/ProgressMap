@@ -247,7 +247,6 @@ function updateBuildingsInView(buildings){
     }
 
 function updateProgressAreasInView (polygonData){
-    console.log("polygon received:", polygonData);
     polygonData.forEach(area => {
 
         // Create a standard Leaflet Polygon
@@ -268,7 +267,7 @@ function updateProgressAreasInView (polygonData){
 
         polygonLayer.on('click', (e) => {
             L.DomEvent.stopPropagation(e); // Stop map click event from firing
-            onProgressAreaClick({ builders: buildersList, name: "area" });
+            onProgressAreaClick({ description: area.description, title: area.title, area: area.area });
         });
 
         // Add layer directly to the layer group
@@ -399,8 +398,9 @@ function displayBuildingBox(building) {
 
 function displayProgressAreaBox(progressArea){
     newItemInfoBox("Progress Area")
-    addStat(itemInfoBox,"Name", progressArea.name)
-    addStat(itemInfoBox,"Builders",progressArea.builders)
+    addStat(itemInfoBox,"Name", progressArea.title)
+    addStat(itemInfoBox,"Description",progressArea.description)
+    addStat(itemInfoBox, "Area", formatArea(progressArea.area) )
 }
 
 function newItemInfoBox(titleName){
@@ -412,8 +412,7 @@ function newItemInfoBox(titleName){
     itemInfoBox.innerHTML = `<button class="CloseBoxBtn" id="btnCloseBuilding" title="Close">&times;</button>
                     <p class="sidebarTitle" id="ItemInfoBoxTitle">${titleName}</p>`
     let closeBuildingBtn = document.getElementById("btnCloseBuilding")
-    console.log(closeBuildingBtn);
-    closeBuildingBtn.addEventListener("click", () => { console.log("click");displayWelcomeBox(); itemSelected = false});
+    closeBuildingBtn.addEventListener("click", () => { displayWelcomeBox(); itemSelected = false});
 }
 
 function isMobile() {
@@ -427,6 +426,13 @@ window.addEventListener("resize", () => {
     }
 });
 
+//input is area in m^2
+function formatArea(area){
+    if (area < 10000){
+        return area.toFixed(0) + " m²"
+    }
+    return (area/ 1000000).toPrecision(3) + " Km²"
+}
 
 function formatDate(dateStr) {
     if (!dateStr) return "Unknown";
@@ -448,7 +454,6 @@ function formatDate(dateStr) {
     const date = new Date(dateStr);
 
     if (isNaN(date.getTime())) return dateStr;
-    console.log("date is valid")
 
     const cutoffDate = new Date("2026-03-15T00:00:00");
     if (date < cutoffDate) return "Unknown";
