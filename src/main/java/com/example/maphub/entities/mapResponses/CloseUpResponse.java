@@ -6,4 +6,5 @@ import java.util.List;
 
 public class CloseUpResponse {
     public List<Building> buildings;
+    public List<ProgressArea> progressArea;
 }

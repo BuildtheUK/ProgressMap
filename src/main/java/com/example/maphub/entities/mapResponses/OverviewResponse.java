@@ -7,4 +7,5 @@ import java.util.List;
 public class OverviewResponse {
     public List<BuildingGridRespItem> buildings;
     public List<HeatmapRespItem> heatmap;
+    public List<ProgressArea> progressArea;
 }

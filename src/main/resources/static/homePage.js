@@ -9,21 +9,27 @@ const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const loginButton = document.getElementById("btnLogin")
-const regionInfoBox = document.getElementById("RegionInfoBox")
-const buildingInfoBox = document.getElementById("BuildingInfoBox")
+const itemInfoBox = document.getElementById("ItemInfoBox")
 const noItemSelectedInfoBox = document.getElementById("NoItemSelected")
 const profileIcon = document.getElementById("MCSkinLogo")
 const btnCloseWelcome = document.getElementById("btnCloseWelcome")
+const welcomeMessage = document.getElementById("welcomeMessage")
+const welcomeTitle = document.getElementById("welcomeTitle")
+const serverStatsBox = document.getElementById("ServerStatsBox");
+const sidebarDivider = document.getElementById("sidebarDivider");
 
 var loggedIn = false;
 var username = ""
-var buildingSelected = false;
+var itemSelected = false;
+var welcomeMessageRemoved = false;
 
 const redHeatmapColours = ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#a50f15','#67000d']
 var heatmapColours = redHeatmapColours
 const gridMarkerGroup = L.layerGroup().addTo(map);
 const buildingMarkerGroup = L.layerGroup().addTo(map);
 const heatMapGroup = L.layerGroup().addTo(map);
+const regionMarkerGroup = L.layerGroup().addTo(map);
+const progressAreaMarkerGroup = L.layerGroup().addTo(map);
 var buildings = []
 
 const stepIcon = L.icon({
@@ -110,25 +116,26 @@ map.on("moveend", () => {
     updateLayers()
 });
 
-map.on("click",() => {if (buildingSelected){displayWelcomeBox(); buildingSelected = false}})
+map.on("click",() => {if (itemSelected){displayWelcomeBox(); itemSelected = false}})
 
 async function updateLayers() {
     if (map.getZoom() >= 17) {
-        gridMarkerGroup.clearLayers();
-        heatMapGroup.clearLayers();
         const dto = await getCloseUp();
-        if (dto && dto.buildings) {
+            clearLayers();
             updateBuildingsInView(dto.buildings);
-        }
+            updateProgressAreasInView(dto.progressArea);
     } else {
-        buildingMarkerGroup.clearLayers();
         const dto = await getOverview();
+        clearLayers() //goes after fetch to prevent flickering
         if (dto) {
             if (dto.buildings) {
                 updateMarkerGroupCounts(dto.buildings);
             }
             if (dto.heatmap) {
                 updateHeatmapView(dto.heatmap);
+            }
+            if (dto.progressArea){
+                updateProgressAreasInView(dto.progressArea);
             }
         }
     }
@@ -149,6 +156,7 @@ async function getOverview() {
         const response = await fetch("/map/overview", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(requestData)
         });
 
@@ -174,6 +182,7 @@ async function getCloseUp() {
         const response = await fetch("/map/closeUp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(requestData)
         });
 
@@ -186,7 +195,6 @@ async function getCloseUp() {
 }
 
 function updateHeatmapView(heatmapItems) {
-    heatMapGroup.clearLayers();
 
     heatmapItems.forEach(item => {
         // Construct bounding rectangle coordinates: [[south, west], [north, east]]
@@ -209,7 +217,6 @@ function updateHeatmapView(heatmapItems) {
 }
 
 function updateBuildingsInView(buildings){
-        buildingMarkerGroup.clearLayers();
 
         buildings.forEach(building => {
             // Create a standard or custom marker at building coordinates
@@ -239,13 +246,54 @@ function updateBuildingsInView(buildings){
         });
     }
 
+function updateProgressAreasInView (polygonData){
+    polygonData.forEach(area => {
+
+        // Create a standard Leaflet Polygon
+        const polygonLayer = L.polygon(area.coords, {
+            color: area.colour,
+            fillColor: area.colour,
+            fillOpacity: 0.5,
+            weight: 2
+        });
+        polygonLayer.customData = {
+            builders: area.builders,
+            percentageComplete: area.percentageComplete,
+            timeFinished: area.timeFinished
+        };
+
+        // Prepare builders list BEFORE registering click
+        const buildersList = area.builders && area.builders.length > 0 ? area.builders.join(", ") : "None";
+
+        polygonLayer.on('click', (e) => {
+            L.DomEvent.stopPropagation(e); // Stop map click event from firing
+            onProgressAreaClick({ description: area.description, title: area.title, area: area.area });
+        });
+
+        // Add layer directly to the layer group
+        progressAreaMarkerGroup.addLayer(polygonLayer);
+    });
+    }
+
+    function onProgressAreaClick(progressData){
+        itemSelected = true
+        displayProgressAreaBox(progressData)
+    }
+
 function onBuildingClick(buildingData) {
-    buildingSelected = true
+    itemSelected = true
     displayBuildingBox(buildingData)
 }
 
-function updateMarkerGroupCounts(buildingGridItems) {
+function clearLayers(){
     gridMarkerGroup.clearLayers();
+    regionMarkerGroup.clearLayers();
+    progressAreaMarkerGroup.clearLayers();
+    buildingMarkerGroup.clearLayers();
+    heatMapGroup.clearLayers();
+}
+
+function updateMarkerGroupCounts(buildingGridItems) {
 
     buildingGridItems.forEach(item => {
         if (item.count > 0) {
@@ -309,21 +357,10 @@ function loggedOutDisplay(){
     profileIcon.onclick = null
 }
 
-const serverStatsBox = document.getElementById("ServerStatsBox");
-const closeBuildingBtn = document.getElementById("btnCloseBuilding");
-const closeRegionBtn = document.getElementById("closeRegionBtn");
-const sidebarDivider = document.getElementById("sidebarDivider");
-
-closeBuildingBtn.addEventListener("click", () => {displayWelcomeBox(); buildingSelected = false});
-closeRegionBtn.addEventListener("click", displayWelcomeBox);
-const welcomeMessage = document.getElementById("welcomeMessage")
-const welcomeTitle = document.getElementById("welcomeTitle")
-
 btnCloseWelcome.addEventListener("click", () => {noItemSelectedInfoBox.style.display = "none"; serverStatsBox.style.display ="flex"; welcomeMessageRemoved = true;});
 
 function displayWelcomeBox() {
-    buildingInfoBox.style.display = "none";
-    regionInfoBox.style.display = "none";
+    itemInfoBox.style.display = "none";
 
     if (isMobile()) {
         if (!welcomeMessageRemoved) {
@@ -348,30 +385,38 @@ function displayWelcomeBox() {
         welcomeMessage.innerHTML = "Explore our current progress or create and edit your own claims! (eventually)"
     } else {
         welcomeTitle.innerHTML = `Welcome to BTUK Progress Map!`
-        welcomeMessage.innerHTML = "Have a look around or create an account to link to your in-game progress."
+        welcomeMessage.innerHTML = `Have a look around or create an account to link to your in-game progress.`
     }
 }
 
-const buildingId = document.getElementById("buildingId")
-const buildingBuilder = document.getElementById("buildingBuilder")
-const buildingDate = document.getElementById("buildingCreatedDate")
-let welcomeMessageRemoved = false
-
 function displayBuildingBox(building) {
-    // Hide default views and tabs
+    newItemInfoBox("Building Info")
+    addStat(itemInfoBox,"Building ID", building.buildingId)
+    addStat(itemInfoBox, "Builder",building.username)
+    addStat(itemInfoBox, "Date built", formatDate(building.timeAdded))
+}
+
+function displayProgressAreaBox(progressArea){
+    newItemInfoBox("Progress Area")
+    addStat(itemInfoBox,"Name", progressArea.title)
+    addStat(itemInfoBox,"Description",progressArea.description)
+    addStat(itemInfoBox, "Area", formatArea(progressArea.area) )
+}
+
+function newItemInfoBox(titleName){
     noItemSelectedInfoBox.style.display = "none";
     serverStatsBox.style.display = "none";
-    regionInfoBox.style.display = "none";
     sidebarDivider.style.display = "none";
 
-    buildingInfoBox.style.display = "flex";
-    buildingId.innerText = building.buildingId
-    buildingBuilder.innerText = building.username
-    buildingDate.innerText = formatDate(building.timeAdded)
+    itemInfoBox.style.display = "flex";
+    itemInfoBox.innerHTML = `<button class="CloseBoxBtn" id="btnCloseBuilding" title="Close">&times;</button>
+                    <p class="sidebarTitle" id="ItemInfoBoxTitle">${titleName}</p>`
+    let closeBuildingBtn = document.getElementById("btnCloseBuilding")
+    closeBuildingBtn.addEventListener("click", () => { displayWelcomeBox(); itemSelected = false});
 }
 
 function isMobile() {
-    return window.matchMedia("(max-width: 800px)").matches;
+    return window.matchMedia("(max-width: 700px)").matches;
 }
 
 window.addEventListener("resize", () => {
@@ -381,6 +426,13 @@ window.addEventListener("resize", () => {
     }
 });
 
+//input is area in m^2
+function formatArea(area){
+    if (area < 10000){
+        return area.toFixed(0) + " m²"
+    }
+    return (area/ 1000000).toPrecision(3) + " Km²"
+}
 
 function formatDate(dateStr) {
     if (!dateStr) return "Unknown";
@@ -402,7 +454,6 @@ function formatDate(dateStr) {
     const date = new Date(dateStr);
 
     if (isNaN(date.getTime())) return dateStr;
-    console.log("date is valid")
 
     const cutoffDate = new Date("2026-03-15T00:00:00");
     if (date < cutoffDate) return "Unknown";
@@ -425,8 +476,8 @@ async function loadServerStats() {
         if (!response.ok) throw new Error("Failed to fetch server stats");
         const data = await response.json();
         if (data){
-            let statBoxName = "ServerStatsBox"
-            addStat(statBoxName,"Buildings",data.buildings.toString())
+            let statBox = document.getElementById( "ServerStatsBox")
+            addStat(statBox,"Buildings",data.buildings.toString())
             let percentageText = ""
             if (data.percentage > 0 && data.percentage < 0.01) {
                 percentageText = data.percentage.toFixed(4) + "%";
@@ -440,9 +491,9 @@ async function loadServerStats() {
             else if (data.previousRecentBuildings < data.buildingsRecent){
                 changeIcon = "Increase"
             }
-            addStat(statBoxName,"Buildings last month",data.buildingsRecent,changeIcon,"")
-            addStat(statBoxName,"Percentage Complete",percentageText,"","")
-            addStat(statBoxName,"Estimated Completion", formatDate(data.estimatedFinishDate),"","")
+            addStat(statBox,"Buildings last month",data.buildingsRecent,changeIcon,"")
+            addStat(statBox,"Percentage Complete",percentageText)
+            addStat(statBox,"Estimated Completion", formatDate(data.estimatedFinishDate))
 
         }
 
